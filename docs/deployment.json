@@ -2,17 +2,17 @@
   "network": "GenLayer Studio Next",
   "chain_id": 61997,
   "rpc": "https://studio-dev.genlayer.com/api",
-  "explorer": "https://explorer-studio-dev.genlayer.com/address/0xE32164d8CD5352ff0d8D1c06162332e2d6a19397",
-  "contract_address": "0xE32164d8CD5352ff0d8D1c06162332e2d6a19397",
-  "deploy_tx": "0x12bdbd5ad00e6759b2e944c4840db404baa6c03d455b21561da47677aaba87a4",
+  "explorer": "https://explorer-studio-dev.genlayer.com/address/0x2B193328DEf1095AC9752F2F3CD182AF6a442e00",
+  "contract_address": "0x2B193328DEf1095AC9752F2F3CD182AF6a442e00",
+  "deploy_tx": "0x88e98ae26afa67cdf5604e41cb233eb2c9f8f5154756462e7ede5a8f8bad0d84",
   "deploy_status": "FINALIZED",
   "deploy_accepted_as": "ACCEPTED",
   "deploy_consensus": "MAJORITY_AGREE",
   "source": "contracts/speclock.py",
-  "source_commit": "c6562a4ca818208cb229dbdfbfde5b2917ceafa9",
-  "source_sha256": "be96caee3477096cb58f395bda25958f1ee90e987a3be691ba5308ce0cae45af",
-  "source_bytes": 37310,
-  "onchain_sha256": "be96caee3477096cb58f395bda25958f1ee90e987a3be691ba5308ce0cae45af",
+  "source_commit": "ddd1f3bcc55bb8894c3325b3176004e59b5535e1",
+  "source_sha256": "9d4558a22081e6cd0bec4f119b542048169b4cfa6d76d66da13dc77aeeb1dc9c",
+  "source_bytes": 38780,
+  "onchain_sha256": "9d4558a22081e6cd0bec4f119b542048169b4cfa6d76d66da13dc77aeeb1dc9c",
   "byte_identical": true,
   "genvm_runner": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng",
   "methods": [
@@ -32,5 +32,5 @@
     "register_specification",
     "submit_assessment"
   ],
-  "deployed_at": "2026-10-04T18:49:01Z"
+  "deployed_at": "2026-10-04T19:18:04Z"
 }
