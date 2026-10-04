@@ -24,6 +24,7 @@ should be able to catch.
 import copy
 import importlib.util
 import json
+import os
 import pathlib
 import sys
 import types
@@ -31,7 +32,12 @@ from datetime import datetime, timezone
 
 import pytest
 
-CONTRACT_PATH = pathlib.Path(__file__).resolve().parents[2] / "contracts" / "speclock.py"
+# SPECLOCK_CONTRACT lets the mutation sweep point this suite at a deliberately
+# broken copy. Without it every mutant would "survive" by never being loaded,
+# and the sweep would report a suite that holds everything while testing nothing.
+CONTRACT_PATH = pathlib.Path(os.environ.get("SPECLOCK_CONTRACT")
+                             or pathlib.Path(__file__).resolve().parents[2] / "contracts"
+                             / "speclock.py")
 
 PUBLISHER = "0xA1b2C3d4E5f60718293A4b5C6d7E8f9012345678"
 INTEGRATOR = "0xB2c3D4e5F60718293a4B5c6D7e8F90123456789A"
