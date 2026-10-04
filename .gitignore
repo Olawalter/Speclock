@@ -1,0 +1,27 @@
+# secrets and local state
+.env
+.env.local
+.env.*.local
+
+# dependencies and builds
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# python
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+
+# working logs
+*.log
+
+# os and editors
+.DS_Store
+Thumbs.db
+.vscode/
