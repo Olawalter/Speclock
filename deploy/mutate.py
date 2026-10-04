@@ -94,11 +94,11 @@ MUTANTS = [
 
     # --- grounding -----------------------------------------------------------
     ('a decisive answer needs no evidence',
-     '        if status in (F_SATISFIED, F_VIOLATED):\n            grounded = _quotable(evidence) and _grounds(evidence, haystack)',
-     '        if False:\n            grounded = _quotable(evidence) and _grounds(evidence, haystack)'),
+     '        if status in (F_SATISFIED, F_VIOLATED):\n            grounded = _grounds(evidence, haystack)',
+     '        if False:\n            grounded = _grounds(evidence, haystack)'),
     ('a quote need not appear in either document',
-     '            grounded = _quotable(evidence) and _grounds(evidence, haystack)',
-     '            grounded = _quotable(evidence)'),
+     '            grounded = _grounds(evidence, haystack)',
+     '            grounded = True'),
     ("grounding is checked against the markup",
      "    return SPACES.sub(\" \", MARKUP.sub(\"\", str(text or \"\"))).strip().lower()",
      "    return str(text or \"\")"),
