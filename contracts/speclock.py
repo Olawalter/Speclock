@@ -94,7 +94,13 @@ REQUIREMENT_ID = re.compile(r"^[A-Z][A-Z0-9]{1,11}-[0-9]{1,4}$")
 # three or more angle brackets in a row are how a document would try to close
 # the fence the evidence is read inside
 ANGLE_RUN = re.compile(r"[<>]{3,}")
-MARKUP = re.compile(r"[*_`#>|~]+")
+# Marks a document wears, removed from both sides before they are compared:
+# emphasis, fences, quotation marks, and the backslashes a reader uses when it
+# cites a JSON fragment. Underscores deliberately stay: an API specification is
+# mostly snake_case identifiers, and the question is usually about one named
+# field, so transaction_id must not quietly become transactionid.
+MARKUP_CHARS = "*`#>|~" + '"' + chr(39) + chr(92)
+MARKUP = re.compile("[" + re.escape(MARKUP_CHARS) + "]+")
 SPACES = re.compile(r"\s+")
 
 
@@ -149,10 +155,34 @@ def _for_matching(text: str) -> str:
     return SPACES.sub(" ", MARKUP.sub("", str(text or ""))).strip().lower()
 
 
+# how many consecutive words make a quotation rather than a coincidence
+QUOTE_WORDS = 6
+
+
 def _quotable(text: str) -> bool:
     """Long enough to be a quotation rather than a coincidence."""
     cleaned = _for_matching(text)
-    return len(cleaned) >= 8 and len(cleaned.split(" ")) >= 2
+    return len(cleaned) >= 8 and len(cleaned.split(" ")) >= QUOTE_WORDS
+
+
+def _grounds(evidence: str, haystack: str) -> bool:
+    """Does this evidence quote the documents it was given?
+
+    It looks for a run of consecutive words that is really there, rather than
+    demanding the whole citation be one contiguous substring. That distinction
+    is the whole point here: SPECLOCK asks a reader to compare two documents, so
+    the most useful answer it can give cites BOTH -- "the baseline says X, the
+    proposal says Y" -- and that is never a contiguous span of either. Requiring
+    one rejected exactly the answers worth having, which a live round found
+    after the mocked suite did not.
+    """
+    words = _for_matching(evidence).split(" ")
+    if len(words) < QUOTE_WORDS:
+        return False
+    for start in range(len(words) - QUOTE_WORDS + 1):
+        if " ".join(words[start:start + QUOTE_WORDS]) in haystack:
+            return True
+    return False
 
 
 def _sanitize(text: str) -> str:
@@ -238,7 +268,7 @@ def _findings_of(answer: dict, requirements: list, baseline: str, proposed: str)
         # from memory of how such APIs usually work, and be confidently wrong.
         grounded = True
         if status in (F_SATISFIED, F_VIOLATED):
-            grounded = _quotable(evidence) and _for_matching(evidence) in haystack
+            grounded = _quotable(evidence) and _grounds(evidence, haystack)
         findings.append({"requirement_id": rid, "status": status, "evidence": evidence,
                          "reasoning": reasoning, "grounded": bool(grounded),
                          "statement": statements[rid]})

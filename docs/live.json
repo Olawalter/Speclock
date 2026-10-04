@@ -1,0 +1,420 @@
+{
+  "network": "GenLayer Studio Next",
+  "chain_id": 61997,
+  "rpc": "https://studio-dev.genlayer.com/api",
+  "contract": "0xE32164d8CD5352ff0d8D1c06162332e2d6a19397",
+  "started_at": "2026-10-04T18:55:39Z",
+  "accounts": {
+    "publisher": "0x82a4d0bf5Af143a8b2a50cD2d442ec420Ae6B785",
+    "integrator": "0xb64406a34e081bce7b56f0a7636945Fe26ADD03c",
+    "stranger": "0x83D4192e7CEE413c1c88209daB13758b56384860"
+  },
+  "transactions": [
+    {
+      "step": "register_specification",
+      "function": "register_specification",
+      "caller": "publisher",
+      "tx": "0xbf4c6dd5444d90447ecd5e800e897e751d59640bb8d0e8a76e70fe69fdb30a2e",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": false
+    },
+    {
+      "step": "a stranger adds a requirement (refused)",
+      "function": "add_requirement",
+      "caller": "stranger",
+      "tx": "0x636dabbc6aa93aa3b4669577164a06f0834d89d431ac14790240ae762ac03dc1",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": true,
+      "refusal": "[UNAUTHORIZED] only the account that registered this specification can do that"
+    },
+    {
+      "step": "register with a hash of something else (refused)",
+      "function": "register_specification",
+      "caller": "publisher",
+      "tx": "0xe2d80253ed8d18f51ac0adccdc8e261f36f13d4086cfbdee18be9123c393f16a",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": true,
+      "refusal": "[HASH_MISMATCH] the baseline hash does not cover the baseline content; the content hashes to 668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf"
+    },
+    {
+      "step": "add_requirement PAY-001",
+      "function": "add_requirement",
+      "caller": "publisher",
+      "tx": "0x14181ddf4805992d7b65f30362b007035f22a878ea2b9d992af88e79bc5c6553",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": false
+    },
+    {
+      "step": "add_requirement PAY-002",
+      "function": "add_requirement",
+      "caller": "publisher",
+      "tx": "0x8384563288d969d39426ba55dca1eda2b4b6f9fd1dbf981d6b79cd3121a2c687",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": false
+    },
+    {
+      "step": "add_requirement PAY-003",
+      "function": "add_requirement",
+      "caller": "publisher",
+      "tx": "0x7c50b42817dacfd88e3a1af1c65b3a27c34e970a99fb4f276c52ddd5ec7337e1",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": false
+    },
+    {
+      "step": "assess before freezing (refused)",
+      "function": "submit_assessment",
+      "caller": "integrator",
+      "tx": "0x45a020c066e18d409f9abb7660ad1d25d7168e9523b0bf7abd88064b433867f2",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": true,
+      "refusal": "[EXPECTED] a specification must be frozen before it can be assessed; it is REGISTERED"
+    },
+    {
+      "step": "a stranger freezes it (refused)",
+      "function": "freeze_specification",
+      "caller": "stranger",
+      "tx": "0x76f972105c12362128f7018bf26ba0c59503d374f647341950424ba703e7eaba",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": true,
+      "refusal": "[UNAUTHORIZED] only the account that registered this specification can do that"
+    },
+    {
+      "step": "freeze_specification",
+      "function": "freeze_specification",
+      "caller": "publisher",
+      "tx": "0x37c65ae8a16a1f447ebdbfa7de25bad56c98685b386aba84aafe8ea8ec1a5ae0",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": false
+    },
+    {
+      "step": "add a requirement after freezing (refused)",
+      "function": "add_requirement",
+      "caller": "publisher",
+      "tx": "0x5735530c60dceb78c6b202020a14e5d625f232858160c4025913d3bd2fed5baa",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": true,
+      "refusal": "[FROZEN_SPECIFICATION] this specification is frozen; its requirements cannot change"
+    },
+    {
+      "step": "submit_assessment [breaking]",
+      "function": "submit_assessment",
+      "caller": "integrator",
+      "tx": "0x279245787f3d6605e4d8fb2339b9b2d0adba4ce9d872c80285b693bac4b71e0e",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": false
+    }
+  ],
+  "specification": {
+    "registered": {
+      "assessment_count": 0,
+      "baseline_bytes": 581,
+      "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
+      "baseline_version": "2.4",
+      "created_at": "2026-10-04T18:55:49Z",
+      "creator": "0x82a4d0bf5Af143a8b2a50cD2d442ec420Ae6B785",
+      "criteria_digest": "",
+      "description": "The public payments interface that merchant integrations settle against: authorisation, capture, and the shape of a successful payment response.",
+      "frozen": false,
+      "frozen_at": "",
+      "name": "Payments API",
+      "requirement_count": 0,
+      "requirements": [],
+      "rules": "speclock-aggregation-1",
+      "source_reference": "https://docs.example.com/payments/v2",
+      "specification_id": "S2",
+      "state": "DRAFT",
+      "updated_at": "2026-10-04T18:55:49Z"
+    },
+    "frozen": {
+      "assessment_count": 0,
+      "baseline_bytes": 581,
+      "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
+      "baseline_version": "2.4",
+      "created_at": "2026-10-04T18:55:49Z",
+      "creator": "0x82a4d0bf5Af143a8b2a50cD2d442ec420Ae6B785",
+      "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
+      "description": "The public payments interface that merchant integrations settle against: authorisation, capture, and the shape of a successful payment response.",
+      "frozen": true,
+      "frozen_at": "2026-10-04T18:57:13Z",
+      "name": "Payments API",
+      "requirement_count": 3,
+      "requirements": [
+        {
+          "added_at": "2026-10-04T18:56:21Z",
+          "frozen": true,
+          "requirement_id": "PAY-001",
+          "severity": "BLOCKING",
+          "specification_id": "S2",
+          "statement": "The transaction_id field must be present in every successful payment response."
+        },
+        {
+          "added_at": "2026-10-04T18:56:34Z",
+          "frozen": true,
+          "requirement_id": "PAY-002",
+          "severity": "MAJOR",
+          "specification_id": "S2",
+          "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment."
+        },
+        {
+          "added_at": "2026-10-04T18:56:47Z",
+          "frozen": true,
+          "requirement_id": "PAY-003",
+          "severity": "MINOR",
+          "specification_id": "S2",
+          "statement": "A failed response must carry a stable machine-readable error.code."
+        }
+      ],
+      "rules": "speclock-aggregation-1",
+      "source_reference": "https://docs.example.com/payments/v2",
+      "specification_id": "S2",
+      "state": "FROZEN",
+      "updated_at": "2026-10-04T18:57:13Z"
+    }
+  },
+  "proposals": {
+    "breaking": {
+      "assessment_id": "A1",
+      "tx": "0x279245787f3d6605e4d8fb2339b9b2d0adba4ce9d872c80285b693bac4b71e0e",
+      "attempts": [
+        {
+          "tx": "0x279245787f3d6605e4d8fb2339b9b2d0adba4ce9d872c80285b693bac4b71e0e",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "agree": 3,
+            "idle": 2
+          },
+          "refused": false
+        }
+      ],
+      "expected": "BREAKING_CHANGE",
+      "assessment": {
+        "assessment_id": "A1",
+        "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
+        "baseline_version": "2.4",
+        "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
+        "decisive_digest": "98a55116afa4063900a50ecda5fd215e6fd18b83bcc0ffd0c52aca527b2786c2",
+        "findings": [
+          {
+            "effective_status": "UNCLEAR",
+            "evidence": "Baseline: \"transaction_id is required in every successful payment response\" and \"\\\"transaction_id\\\": \\\"string, required, always present\\\"\". Proposed: \"\\\"transaction_id\\\": \\\"string, optional, present when available\\\"\" and \"transaction_id is optional in a successful payment response. Clients should fall back to the Idempotency-Key they supplied when it is absent.\"",
+            "held_for_grounding": true,
+            "reasoning": "The requirement says the transaction_id field must be present in every successful payment response. The baseline states it is \"required in every successful payment response\" and \"always present\". The proposed specification directly contradicts that by saying it is \"optional\" and may be absent, so the requirement is not preserved.",
+            "requirement_id": "PAY-001",
+            "statement": "The transaction_id field must be present in every successful payment response.",
+            "status": "VIOLATED"
+          },
+          {
+            "effective_status": "SATISFIED",
+            "evidence": "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.",
+            "held_for_grounding": false,
+            "reasoning": "The proposed specification retains the idempotency clause word-for-word from the baseline. The text is identical in both versions, confirming that a repeated Idempotency-Key must return the original response and must not create a second payment. PAY-002 is fully preserved.",
+            "requirement_id": "PAY-002",
+            "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
+            "status": "SATISFIED"
+          },
+          {
+            "effective_status": "SATISFIED",
+            "evidence": "A failed response carries error.code, a stable machine-readable string.",
+            "held_for_grounding": false,
+            "reasoning": "The proposed specification (2.5) retains the exact same wording in the Errors section as the baseline specification (2.4): 'A failed response carries error.code, a stable machine-readable string.' This directly satisfies PAY-003, which requires that a failed response carry a stable machine-readable error.code. The wording is identical and the meaning is preserved.",
+            "requirement_id": "PAY-003",
+            "statement": "A failed response must carry a stable machine-readable error.code.",
+            "status": "SATISFIED"
+          }
+        ],
+        "proposed_bytes": 620,
+        "proposed_hash": "0642fe67ae2569bec862edafa051d2148d64c0e69f0c3cdd201bfc5ea38b74b3",
+        "proposed_version": "2.5",
+        "rules": "speclock-aggregation-1",
+        "schema": "speclock.finding/1",
+        "scope": "Whether a proposed specification preserves each requirement that was frozen before the proposal was submitted. Not a judgement about the quality of either document, not proof of authorship or publication, and not a guarantee that a service behaves as written.",
+        "specification_id": "S2",
+        "specification_name": "Payments API",
+        "submitted_at": "2026-10-04T18:57:54Z",
+        "submitted_by": "0xb64406a34e081bce7b56f0a7636945Fe26ADD03c",
+        "summary": "1 of 3 frozen requirement(s) could not be settled by this evidence",
+        "verdict": "INCONCLUSIVE"
+      },
+      "findings": {
+        "assessment_id": "A1",
+        "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
+        "decisive_digest": "98a55116afa4063900a50ecda5fd215e6fd18b83bcc0ffd0c52aca527b2786c2",
+        "items": [
+          {
+            "effective_status": "UNCLEAR",
+            "evidence": "Baseline: \"transaction_id is required in every successful payment response\" and \"\\\"transaction_id\\\": \\\"string, required, always present\\\"\". Proposed: \"\\\"transaction_id\\\": \\\"string, optional, present when available\\\"\" and \"transaction_id is optional in a successful payment response. Clients should fall back to the Idempotency-Key they supplied when it is absent.\"",
+            "held_for_grounding": true,
+            "reasoning": "The requirement says the transaction_id field must be present in every successful payment response. The baseline states it is \"required in every successful payment response\" and \"always present\". The proposed specification directly contradicts that by saying it is \"optional\" and may be absent, so the requirement is not preserved.",
+            "requirement_id": "PAY-001",
+            "statement": "The transaction_id field must be present in every successful payment response.",
+            "status": "VIOLATED"
+          },
+          {
+            "effective_status": "SATISFIED",
+            "evidence": "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.",
+            "held_for_grounding": false,
+            "reasoning": "The proposed specification retains the idempotency clause word-for-word from the baseline. The text is identical in both versions, confirming that a repeated Idempotency-Key must return the original response and must not create a second payment. PAY-002 is fully preserved.",
+            "requirement_id": "PAY-002",
+            "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
+            "status": "SATISFIED"
+          },
+          {
+            "effective_status": "SATISFIED",
+            "evidence": "A failed response carries error.code, a stable machine-readable string.",
+            "held_for_grounding": false,
+            "reasoning": "The proposed specification (2.5) retains the exact same wording in the Errors section as the baseline specification (2.4): 'A failed response carries error.code, a stable machine-readable string.' This directly satisfies PAY-003, which requires that a failed response carry a stable machine-readable error.code. The wording is identical and the meaning is preserved.",
+            "requirement_id": "PAY-003",
+            "statement": "A failed response must carry a stable machine-readable error.code.",
+            "status": "SATISFIED"
+          }
+        ],
+        "summary": "1 of 3 frozen requirement(s) could not be settled by this evidence",
+        "verdict": "INCONCLUSIVE"
+      }
+    }
+  },
+  "walls": {
+    "stranger_adds": {
+      "step": "a stranger adds a requirement (refused)",
+      "function": "add_requirement",
+      "caller": "stranger",
+      "tx": "0x636dabbc6aa93aa3b4669577164a06f0834d89d431ac14790240ae762ac03dc1",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": true,
+      "refusal": "[UNAUTHORIZED] only the account that registered this specification can do that"
+    },
+    "hash_mismatch": {
+      "step": "register with a hash of something else (refused)",
+      "function": "register_specification",
+      "caller": "publisher",
+      "tx": "0xe2d80253ed8d18f51ac0adccdc8e261f36f13d4086cfbdee18be9123c393f16a",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": true,
+      "refusal": "[HASH_MISMATCH] the baseline hash does not cover the baseline content; the content hashes to 668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf"
+    },
+    "assess_unfrozen": {
+      "step": "assess before freezing (refused)",
+      "function": "submit_assessment",
+      "caller": "integrator",
+      "tx": "0x45a020c066e18d409f9abb7660ad1d25d7168e9523b0bf7abd88064b433867f2",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": true,
+      "refusal": "[EXPECTED] a specification must be frozen before it can be assessed; it is REGISTERED"
+    },
+    "stranger_freezes": {
+      "step": "a stranger freezes it (refused)",
+      "function": "freeze_specification",
+      "caller": "stranger",
+      "tx": "0x76f972105c12362128f7018bf26ba0c59503d374f647341950424ba703e7eaba",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "idle": 2,
+        "agree": 3
+      },
+      "refused": true,
+      "refusal": "[UNAUTHORIZED] only the account that registered this specification can do that"
+    },
+    "add_after_freeze": {
+      "step": "add a requirement after freezing (refused)",
+      "function": "add_requirement",
+      "caller": "publisher",
+      "tx": "0x5735530c60dceb78c6b202020a14e5d625f232858160c4025913d3bd2fed5baa",
+      "status": "ACCEPTED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "votes": {
+        "agree": 3,
+        "idle": 2
+      },
+      "refused": true,
+      "refusal": "[FROZEN_SPECIFICATION] this specification is frozen; its requirements cannot change"
+    }
+  },
+  "failed": "ASSERTION FAILED: [breaking] expected BREAKING_CHANGE and the panel reached INCONCLUSIVE"
+}

@@ -136,6 +136,54 @@ class TestGrounding:
         assert finding["effective_status"] == "VIOLATED"
         assert finding["held_for_grounding"] is False
 
+    def test_evidence_that_cites_both_documents_grounds(self, h):
+        """The answer this product most wants is a comparison: the baseline said
+        this, the proposal says that. Such a citation is never one contiguous
+        span of either document, and an earlier version of the grounding rule
+        demanded exactly that -- so it held the best answers at UNCLEAR and let
+        the mocked suite pass, because every fixture here quoted one place. A
+        live round found it."""
+        sid = frozen(h)
+        h.says("PAY-001", "VIOLATED",
+               'Baseline: "transaction_id is required in every successful payment response". '
+               'Proposed: "transaction_id is optional in a successful payment response".')
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        aid = assess(h, sid, PROPOSED_BREAKING)
+        finding = next(f for f in h.call("get_assessment", aid)["findings"]
+                       if f["requirement_id"] == "PAY-001")
+        assert finding["effective_status"] == "VIOLATED"
+        assert finding["held_for_grounding"] is False
+        assert h.call("get_assessment", aid)["verdict"] == "BREAKING_CHANGE"
+
+    def test_a_citation_wearing_json_punctuation_grounds(self, h):
+        """Readers quote schema fragments with their quotes and escapes intact.
+        The document wrote them too, so both sides normalise the same way."""
+        sid = frozen(h)
+        h.says("PAY-001", "VIOLATED",
+               '\\"transaction_id\\": \\"string, optional, present when available\\"')
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        aid = assess(h, sid, PROPOSED_BREAKING)
+        finding = next(f for f in h.call("get_assessment", aid)["findings"]
+                       if f["requirement_id"] == "PAY-001")
+        assert finding["effective_status"] == "VIOLATED"
+
+    def test_a_citation_that_quotes_nothing_real_is_still_held(self, h):
+        """The rule got looser, not absent: six consecutive words still have to
+        be in one of the documents."""
+        sid = frozen(h)
+        h.says("PAY-001", "VIOLATED",
+               'Baseline: "the maintainers confirmed by telephone that nothing changed". '
+               'Proposed: "they said it would be fine for everyone involved".')
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        aid = assess(h, sid, PROPOSED_BREAKING)
+        finding = next(f for f in h.call("get_assessment", aid)["findings"]
+                       if f["requirement_id"] == "PAY-001")
+        assert finding["effective_status"] == "UNCLEAR"
+        assert finding["held_for_grounding"] is True
+
     def test_a_scrap_is_not_a_quotation(self, h):
         """One short word appears in every document. It establishes nothing."""
         sid = frozen(h)
