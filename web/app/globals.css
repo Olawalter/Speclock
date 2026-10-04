@@ -1,0 +1,281 @@
+@import "tailwindcss";
+
+/*
+ * SPECLOCK: a specification registry that has to look like evidence.
+ *
+ * The palette is the brief's. Signal green is the one saturated colour in the
+ * product and it is spent on exactly two things: the single primary action on a
+ * view, and the marker beside a frozen criterion. Everything else is paper,
+ * graphite, hairlines and the four status washes.
+ *
+ * Status is never carried by colour alone. Every verdict and every finding
+ * renders a glyph and a word as well as a wash, because a reader who cannot
+ * distinguish the washes still has to be able to read the result.
+ */
+
+:root {
+  --graphite: #171a19;
+  --paper: #f7f8f5;
+  --signal: #b8f36b;
+  --signal-ink: #2f4a13;
+  --slate: #727a75;
+  --border: #e3e7e1;
+  --white: #ffffff;
+
+  /* status washes, and an ink dark enough to read on each */
+  --compatible: #e4f5d5;
+  --compatible-ink: #2c4a12;
+  --breaking: #fbe8e6;
+  --breaking-ink: #7a241b;
+  --pending: #fff1d5;
+  --pending-ink: #6b4a08;
+  --inconclusive: #ecefeb;
+  --inconclusive-ink: #424944;
+
+  --sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius: 8px;
+  --radius-sm: 6px;
+}
+
+@theme inline {
+  --color-graphite: var(--graphite);
+  --color-paper: var(--paper);
+  --color-signal: var(--signal);
+  --color-slate: var(--slate);
+  --color-border: var(--border);
+  --font-sans: var(--sans);
+  --font-mono: var(--mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--paper);
+  color: var(--graphite);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1rem; }
+
+/* ── structure ───────────────────────────────────────────────────────────── */
+
+.shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 68rem;
+  padding-inline: 20px;
+}
+
+@media (min-width: 900px) {
+  .shell { padding-inline: 32px; }
+}
+
+.panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.panel-head {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+}
+
+.rule { border-top: 1px solid var(--border); }
+
+/* ── words ───────────────────────────────────────────────────────────────── */
+
+.label {
+  font-size: 11px;
+  font-weight: 540;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 0.875em;
+  font-variant-ligatures: none;
+}
+
+.muted { color: var(--slate); }
+
+.lede {
+  color: var(--slate);
+  font-size: 1rem;
+}
+
+/* a document, shown as the bytes that were assessed */
+.document {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  max-height: 26rem;
+  overflow: auto;
+}
+
+/* ── controls ────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--graphite);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 520;
+  color: var(--graphite);
+  background: var(--white);
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.btn:hover:not(:disabled) { background: var(--paper); }
+
+.btn:disabled {
+  border-color: var(--border);
+  color: var(--slate);
+  cursor: not-allowed;
+}
+
+/* the one saturated colour, on one action per view */
+.btn-primary {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--signal-ink);
+}
+
+.btn-primary:hover:not(:disabled) { filter: brightness(0.96); }
+
+.btn-primary:disabled {
+  background: var(--border);
+  border-color: var(--border);
+  color: var(--slate);
+}
+
+.btn-quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--slate);
+}
+
+.btn-quiet:hover:not(:disabled) { color: var(--graphite); background: var(--white); }
+
+.control {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 11px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--graphite);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--graphite);
+}
+
+.control::placeholder { color: var(--slate); }
+
+textarea.control {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  min-height: 14rem;
+  resize: vertical;
+}
+
+:focus-visible {
+  outline: 2px solid var(--graphite);
+  outline-offset: 2px;
+}
+
+/* ── status ──────────────────────────────────────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 540;
+  white-space: nowrap;
+  background: var(--inconclusive);
+  color: var(--inconclusive-ink);
+}
+
+.chip-compatible { background: var(--compatible); color: var(--compatible-ink); }
+.chip-breaking { background: var(--breaking); color: var(--breaking-ink); }
+.chip-pending { background: var(--pending); color: var(--pending-ink); }
+.chip-neutral { background: var(--inconclusive); color: var(--inconclusive-ink); }
+
+.chip-outline {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--slate);
+}
+
+/* the frozen marker: the one other place signal green appears */
+.frozen-mark {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--signal);
+}
+
+/* ── motion ──────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

@@ -93,17 +93,12 @@ MUTANTS = [
      '        evidence = _sanitize(str(row.get("evidence") or "").strip())'),
 
     # --- grounding -----------------------------------------------------------
-    ("a decisive answer needs no evidence",
-     "        if status in (F_SATISFIED, F_VIOLATED):" + NL +
-     "            grounded = _quotable(evidence) and _for_matching(evidence) in haystack",
-     "        if False:" + NL +
-     "            grounded = _quotable(evidence) and _for_matching(evidence) in haystack"),
-    ("a quote need not appear in either document",
-     "            grounded = _quotable(evidence) and _for_matching(evidence) in haystack",
-     "            grounded = _quotable(evidence)"),
-    ("a scrap counts as a quotation",
-     "    return len(cleaned) >= 8 and len(cleaned.split(\" \")) >= 2",
-     "    return len(cleaned) >= 1"),
+    ('a decisive answer needs no evidence',
+     '        if status in (F_SATISFIED, F_VIOLATED):\n            grounded = _quotable(evidence) and _grounds(evidence, haystack)',
+     '        if False:\n            grounded = _quotable(evidence) and _grounds(evidence, haystack)'),
+    ('a quote need not appear in either document',
+     '            grounded = _quotable(evidence) and _grounds(evidence, haystack)',
+     '            grounded = _quotable(evidence)'),
     ("grounding is checked against the markup",
      "    return SPACES.sub(\" \", MARKUP.sub(\"\", str(text or \"\"))).strip().lower()",
      "    return str(text or \"\")"),
@@ -114,6 +109,9 @@ MUTANTS = [
      '        settled.append({**f, "effective_status": F_UNCLEAR if held else status, "held": bool(held)})',
      '        settled.append({**f, "effective_status": status, "held": bool(held)})'),
 
+    ('any run of words grounds a citation',
+     '    for start in range(len(words) - QUOTE_WORDS + 1):',
+     '    for start in range(min(1, len(words))):'),
     # --- the verdict ---------------------------------------------------------
     ("a violation is not decisive",
      "    if F_VIOLATED in statuses:", "    if False:"),
@@ -162,6 +160,12 @@ MUTANTS = [
 ]
 
 EQUIVALENT = {
+    "what the panel compares ignores which requirement":
+        "equivalent by construction, and the reason is worth keeping. The findings are "
+        "sorted by requirement id before the digest is taken, so the position of a status "
+        "in that list IS the requirement it belongs to -- two different mappings cannot "
+        "produce the same ordered list of statuses. The id stays in the tuple as defence "
+        "against the day somebody changes the sort",
     "the creator is whoever the caller says":
         "gl.message.sender_address is never empty inside a write, so `or ''` cannot change it. "
         "The mutant is here to say that the creator comes from the signature and not from an "
@@ -172,9 +176,16 @@ EQUIVALENT = {
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="", help="run only mutants whose name contains this")
+    # Each mutant is a full suite run, so the whole sweep outlives some task
+    # timeouts. These let it be run in halves without weakening any of it.
+    ap.add_argument("--start", type=int, default=0, help="index of the first mutant to run")
+    ap.add_argument("--count", type=int, default=0, help="how many to run (0 means all of them)")
     args = ap.parse_args()
 
     chosen = [m for m in MUTANTS if args.only.lower() in m[0].lower()]
+    chosen = chosen[args.start:(args.start + args.count) if args.count else None]
+    print(f"{len(chosen)} of {len(MUTANTS)} mutants"
+          + (f", from index {args.start}" if args.start else ""), flush=True)
     survivors, bad = [], []
     with tempfile.TemporaryDirectory() as tmp:
         for name, old, new in chosen:

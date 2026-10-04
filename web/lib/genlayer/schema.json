@@ -1,0 +1,246 @@
+{
+  "address": "0x2B193328DEf1095AC9752F2F3CD182AF6a442e00",
+  "chain_id": 61997,
+  "captured_at": "2026-10-04T19:26:54Z",
+  "note": "Read off the chain, not written by hand. The console asserts itself against this.",
+  "schema": {
+    "ctor": {
+      "params": [],
+      "kwparams": {}
+    },
+    "methods": {
+      "add_requirement": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ],
+          [
+            "requirement_id",
+            "string"
+          ],
+          [
+            "statement",
+            "string"
+          ],
+          [
+            "severity",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": false,
+        "ret": "string",
+        "payable": false
+      },
+      "freeze_specification": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": false,
+        "ret": "string",
+        "payable": false
+      },
+      "get_assessment": {
+        "params": [
+          [
+            "assessment_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "get_baseline": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "get_findings": {
+        "params": [
+          [
+            "assessment_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "get_proposed": {
+        "params": [
+          [
+            "assessment_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "get_protocol_info": {
+        "params": [],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "get_requirements": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "get_specification": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "list_assessments": {
+        "params": [
+          [
+            "offset",
+            "int"
+          ],
+          [
+            "limit",
+            "int"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "list_by_creator": {
+        "params": [
+          [
+            "creator",
+            "string"
+          ],
+          [
+            "offset",
+            "int"
+          ],
+          [
+            "limit",
+            "int"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "list_specification_assessments": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ],
+          [
+            "offset",
+            "int"
+          ],
+          [
+            "limit",
+            "int"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "list_specifications": {
+        "params": [
+          [
+            "offset",
+            "int"
+          ],
+          [
+            "limit",
+            "int"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": true,
+        "ret": "dict"
+      },
+      "register_specification": {
+        "params": [
+          [
+            "name",
+            "string"
+          ],
+          [
+            "description",
+            "string"
+          ],
+          [
+            "baseline_version",
+            "string"
+          ],
+          [
+            "baseline_content",
+            "string"
+          ],
+          [
+            "baseline_hash",
+            "string"
+          ],
+          [
+            "source_reference",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": false,
+        "ret": "string",
+        "payable": false
+      },
+      "submit_assessment": {
+        "params": [
+          [
+            "specification_id",
+            "string"
+          ],
+          [
+            "proposed_version",
+            "string"
+          ],
+          [
+            "proposed_content",
+            "string"
+          ],
+          [
+            "proposed_hash",
+            "string"
+          ]
+        ],
+        "kwparams": {},
+        "readonly": false,
+        "ret": "string",
+        "payable": false
+      }
+    }
+  }
+}

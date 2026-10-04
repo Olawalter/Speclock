@@ -353,16 +353,61 @@ class TestMalformedAnswers:
             assess(h, sid, PROPOSED_BREAKING)
 
     def test_an_answer_about_a_requirement_that_does_not_exist_is_refused(self, h):
+        """Asked about PAY-001, answered about PAY-999.
+
+        An earlier version stamped the asked id onto whatever came back, which
+        silently turned an answer about the wrong requirement into an answer
+        about the right one. That is the single mistake here that would never
+        have looked like a mistake, and it also left three of the checks below
+        unreachable."""
         sid = frozen(h)
         h.raw("PAY-001", '{"requirement_id":"PAY-999","status":"SATISFIED","evidence":"'
                          + QUOTE_REQUIRED + '"}')
         h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
         h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
-        # the contract keys the answer by the requirement it asked about, so a
-        # stray id in the body cannot smuggle in a finding
+        with expect_error("[INVALID_FINDING]", "does not have"):
+            assess(h, sid, PROPOSED_SILENT)
+
+    def test_answering_about_a_different_requirement_of_the_same_specification_is_refused(self, h):
+        """Subtler and likelier: the model answers PAY-002 when asked PAY-001.
+        Both ids are real, so this surfaces as the same requirement answered
+        twice while another goes unanswered."""
+        sid = frozen(h)
+        h.raw("PAY-001", '{"requirement_id":"PAY-002","status":"SATISFIED","evidence":"'
+                         + QUOTE_IDEMPOTENT + '"}')
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        with expect_error("[INVALID_FINDING]"):
+            assess(h, sid, PROPOSED_SILENT)
+
+    def test_a_requirement_left_unanswered_is_refused(self, h):
+        sid = frozen(h)
+        h.raw("PAY-001", '{"requirement_id":"PAY-002","status":"UNCLEAR"}')
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        with expect_error("[INVALID_FINDING]"):
+            assess(h, sid, PROPOSED_SILENT)
+
+    def test_an_omitted_id_falls_back_to_the_one_asked_about(self, h):
+        """Strict about a wrong answer, lenient about a quiet one: a model that
+        simply does not echo the field has not said anything misleading."""
+        sid = frozen(h)
+        h.raw("PAY-001", '{"status":"SATISFIED","evidence":"' + QUOTE_REQUIRED + '"}')
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
         aid = assess(h, sid, PROPOSED_SILENT)
         ids = [f["requirement_id"] for f in h.call("get_assessment", aid)["findings"]]
         assert ids == ["PAY-001", "PAY-002", "PAY-003"]
+
+    def test_oversized_evidence_is_bounded(self, h):
+        sid = frozen(h)
+        h.says("PAY-001", "VIOLATED", QUOTE_OPTIONAL + " " + ("x" * 4000))
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        aid = assess(h, sid, PROPOSED_BREAKING)
+        finding = next(f for f in h.call("get_assessment", aid)["findings"]
+                       if f["requirement_id"] == "PAY-001")
+        assert len(finding["evidence"]) <= 600
 
     def test_an_answer_that_is_not_json_rotates_rather_than_failing_hard(self, h):
         """A model that returned prose where JSON was asked for may well answer
@@ -424,6 +469,31 @@ class TestMalformedAnswers:
         ids = [f["requirement_id"] for f in h.call("get_assessment", aid)["findings"]]
         assert ids == sorted(ids) == ["PAY-001", "PAY-002", "PAY-003"]
         assert len(ids) == len(set(ids))
+
+    def test_each_shape_check_on_its_own(self, h):
+        """Two checks that cover each other, asked separately.
+
+        Through the contract's own surface a duplicate answer always implies a
+        missing one -- there are exactly as many answers as requirements -- so
+        removing either check leaves the other to catch it, and a mutation sweep
+        reports both as unnecessary. They are not: they guard different things,
+        and a shape with one fault and not the other reaches each alone."""
+        findings_of = h.module._findings_of
+        requirements = [{"requirement_id": "PAY-001", "statement": "A."},
+                        {"requirement_id": "PAY-002", "statement": "B."}]
+        haystack = "nothing in particular"
+
+        # a duplicate with nothing missing
+        one = [{"requirement_id": "PAY-001", "statement": "A."}]
+        with expect_error("[INVALID_FINDING]", "answered more than once"):
+            findings_of({"findings": [{"requirement_id": "PAY-001", "status": "UNCLEAR"},
+                                      {"requirement_id": "PAY-001", "status": "UNCLEAR"}]},
+                        one, haystack, haystack)
+
+        # something missing with no duplicate
+        with expect_error("[INVALID_FINDING]", "nothing was said about"):
+            findings_of({"findings": [{"requirement_id": "PAY-001", "status": "UNCLEAR"}]},
+                        requirements, haystack, haystack)
 
     def test_oversized_prose_is_bounded_rather_than_rejected(self, h):
         """Length is not a lie. It is trimmed, and the decision stands."""
