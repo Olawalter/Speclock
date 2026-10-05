@@ -228,15 +228,20 @@ def main():
     body = "\n".join(lines()).rstrip() + "\n"
     if "--check" in sys.argv:
         # Compared against what is on disk rather than against git, so this says
-        # the same thing for a file nobody has committed yet.
-        current = OUT.read_text(encoding="utf-8") if OUT.exists() else ""
+        # the same thing for a file nobody has committed yet. Read as bytes:
+        # text mode would quietly translate line endings and call a file that
+        # differs from this one identical to it.
+        current = OUT.read_bytes().decode("utf-8") if OUT.exists() else ""
         if current == body:
             print(f"{OUT.relative_to(ROOT)} is what docs/live.json generates")
             return 0
         print(f"{OUT.relative_to(ROOT)} is not what docs/live.json generates; "
               f"run python deploy/report.py and commit the result")
         return 1
-    OUT.write_text(body, encoding="utf-8")
+    # newline="" so the bytes written are the bytes built here: on Windows the
+    # default would translate every line ending and the file would no longer
+    # match what this script generates anywhere else.
+    OUT.write_text(body, encoding="utf-8", newline="")
     print(f"wrote {OUT.relative_to(ROOT)}, {len(body)} bytes")
     return 0
 

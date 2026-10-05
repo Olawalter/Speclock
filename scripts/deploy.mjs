@@ -82,7 +82,12 @@ async function verify(address, code, digest) {
 }
 
 async function main() {
-  const code = readFileSync(SOURCE, "utf-8");
+  // Normalised to LF before it is hashed or sent. A Windows checkout can hand
+  // back the same file with CRLF, which deploys bytes that hash differently
+  // from the ones in the repository -- so "byte-identical to the deployed
+  // bytes" would hold on the machine that deployed it and nowhere else. The
+  // repository pins this too (.gitattributes), and this is the second lock.
+  const code = readFileSync(SOURCE, "utf-8").replace(/\r\n/g, "\n");
   const digest = createHash("sha256").update(code, "utf-8").digest("hex");
   const head = commit();
   say(`source    ${relative(ROOT, SOURCE)} @ ${head.slice(0, 12) || "uncommitted"}  `

@@ -38,6 +38,14 @@ def main():
             f"{deployment['source']} hashes to {digest[:16]}..., but the deployment record "
             f"says {deployment['source_sha256'][:16]}...: the contract has changed since it "
             f"was deployed, so nothing may claim the chain holds this source")
+    if b"\r\n" in source:
+        # Said separately because the hash mismatch above would otherwise be the
+        # only clue, and "the contract has changed" is the wrong diagnosis when
+        # nothing about it changed except who checked it out.
+        problems.append(
+            f"{deployment['source']} has CRLF line endings in this checkout, so it hashes "
+            f"differently from the LF bytes that were deployed. .gitattributes pins this; "
+            f"a working copy created before it was added needs re-checking out")
     if deployment["onchain_sha256"] != digest:
         problems.append(
             "the deployment record's on-chain hash is not this source's hash")

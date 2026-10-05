@@ -9,19 +9,19 @@ One frozen specification and four proposed versions, on GenLayer Studio Next. Ea
 | | |
 | --- | --- |
 | Network | GenLayer Studio Next, chain `61997` |
-| Contract | [`0xca70c58Ad31FEd10365E5E732af354c13aCA821f`](https://explorer-studio-dev.genlayer.com/address/0xca70c58Ad31FEd10365E5E732af354c13aCA821f) |
-| Deployment | [`0xbfcd0b53`](https://explorer-studio-dev.genlayer.com/tx/0xbfcd0b53cbc3ecd79fceaf10a90ed8b86282ad67b526239d33d445e92f89facd), FINALIZED |
-| Contract bytes | `sha256:d7df6807ef7b0bdd…`, identical to `contracts/speclock.py` at `63629f6c69` |
-| Run | 2026-10-05T03:32:33Z to 2026-10-05T03:38:36Z |
+| Contract | [`0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9`](https://explorer-studio-dev.genlayer.com/address/0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9) |
+| Deployment | [`0x1856421a`](https://explorer-studio-dev.genlayer.com/tx/0x1856421afe8ce02b99e98fdc25559c1cf4f4625f70d8eccfc79b20a554e89aca), FINALIZED |
+| Contract bytes | `sha256:e18a2b6dbfa4be84…`, identical to `contracts/speclock.py` at `c08bb7a2f8` |
+| Run | 2026-10-05T04:19:23Z to 2026-10-05T04:25:52Z |
 | Rules | `speclock-aggregation-1`, schema `speclock.finding/1` |
 
 Three accounts, because a protocol whose rules only hold for the account that wrote them does not have rules:
 
 | Account | Address | Does |
 | --- | --- | --- |
-| publisher | `0x21E5CD76889826C16dEAcf5B98368e814f3f99C6` | registers the specification and freezes it |
-| integrator | `0x4D87d7e494cc6458327e4FC8235bC4b9DBd6CF17` | submits proposed versions for assessment |
-| stranger | `0x789Ba0F32b15567611D67a3d9d241883D00E5A4A` | tries to do the publisher's job |
+| publisher | `0x2E84910d92930E886B2d79e5D79dD6C0f4664567` | registers the specification and freezes it |
+| integrator | `0xfa246d17613eae0608263672973fE36F83A430Dd` | submits proposed versions for assessment |
+| stranger | `0x90b3fa773c99D7AE28A5CD3D044D8A80749d5fAa` | tries to do the publisher's job |
 
 ## What was frozen
 
@@ -33,7 +33,7 @@ Three accounts, because a protocol whose rules only hold for the account that wr
 | `PAY-002` | MAJOR | A repeated Idempotency-Key must return the original response and must not create a second payment. |
 | `PAY-003` | MINOR | A failed response must carry a stable machine-readable error.code. |
 
-Frozen at 2026-10-05T03:34:08Z, which records the criteria as `c5b9b85265bbb200…`. Every assessment below points back at that digest, so a reader can tell these four findings were measured against the same criteria and that the criteria existed before any of the proposals did.
+Frozen at 2026-10-05T04:21:08Z, which records the criteria as `c5b9b85265bbb200…`. Every assessment below points back at that digest, so a reader can tell these four findings were measured against the same criteria and that the criteria existed before any of the proposals did.
 
 Severity is recorded and shown. It does not weight the verdict: a `MINOR` requirement the evidence contradicts produces `BREAKING_CHANGE` exactly as a `BLOCKING` one does, because the protocol has no basis for deciding that somebody else's minor is minor to you.
 
@@ -41,10 +41,10 @@ Severity is recorded and shown. It does not weight the verdict: a `MINOR` requir
 
 | Proposal | Verdict | Transaction |
 | --- | --- | --- |
-| A required field becomes optional | `BREAKING_CHANGE` | [`0x3aea5103`](https://explorer-studio-dev.genlayer.com/tx/0x3aea5103f7f3161f075674028ac5eefc63ade0e0e5406625e86048e4727f9397) |
-| The same promises, rewritten and reordered | `COMPATIBLE` | [`0x72aa013e`](https://explorer-studio-dev.genlayer.com/tx/0x72aa013e581f63ca2a59bcbfec28c7eb79d86d01c3ec55408aa4b66e16d7caf7) |
-| Silent about retries | `INCONCLUSIVE` | [`0x40ea4572`](https://explorer-studio-dev.genlayer.com/tx/0x40ea45726ea36712c3c9a5f386992aa60044884410f3bd0787bc12a63fba4a56) |
-| Tells the reader to return SATISFIED | `BREAKING_CHANGE` | [`0xd53042ce`](https://explorer-studio-dev.genlayer.com/tx/0xd53042ceebc39b72296dc49b97b0a3968aef5212d2a115a55a60dfb23493b930) |
+| A required field becomes optional | `BREAKING_CHANGE` | [`0xdfa47d0b`](https://explorer-studio-dev.genlayer.com/tx/0xdfa47d0b607e978d78d7cdee7db3ad4fc2e767dd931cc70abe49ae04f0af7b54) |
+| The same promises, rewritten and reordered | `COMPATIBLE` | [`0x8ad58b27`](https://explorer-studio-dev.genlayer.com/tx/0x8ad58b27705b35ed6174e4bdfab507f569f635e91ad72b2c6c02285504f594cd) |
+| Silent about retries | `INCONCLUSIVE` | [`0x03514384`](https://explorer-studio-dev.genlayer.com/tx/0x03514384f871372fdefcbab06e6fdb52b1678bb22330a2c50716df0ea66c839d) |
+| Tells the reader to return SATISFIED | `BREAKING_CHANGE` | [`0x6a4865c3`](https://explorer-studio-dev.genlayer.com/tx/0x6a4865c3c046a7afa89434c39a06ff8977521acb0512414f227e92aaf29875a4) |
 
 ### A required field becomes optional
 
@@ -52,21 +52,21 @@ One sentence changes `transaction_id` from required to optional. Two words in a 
 
 | | |
 | --- | --- |
-| Assessment | `A5` |
+| Assessment | `A1` |
 | Proposed version | `2.5`, 620 bytes |
 | Proposed bytes | `sha256:0642fe67ae2569be…` |
 | Verdict | **`BREAKING_CHANGE`** -- at least one frozen requirement is contradicted |
 | Summary | 1 of 3 frozen requirement(s) violated |
-| Transaction | [`0x3aea5103`](https://explorer-studio-dev.genlayer.com/tx/0x3aea5103f7f3161f075674028ac5eefc63ade0e0e5406625e86048e4727f9397) |
+| Transaction | [`0xdfa47d0b`](https://explorer-studio-dev.genlayer.com/tx/0xdfa47d0b607e978d78d7cdee7db3ad4fc2e767dd931cc70abe49ae04f0af7b54) |
 | Consensus | MAJORITY_AGREE (3 agree, 2 idle) |
 | What the panel agreed | `98a55116afa40639…` |
 | Against criteria | `c5b9b85265bbb200…` |
 
 | Requirement | Answered | Recorded | Quoted from the documents |
 | --- | --- | --- | --- |
-| `PAY-001` | VIOLATED | VIOLATED | BASELINE: 'transaction_id is required in every successful payment response and is stable for the lifetime of the payment.' PROPOSED: 'transaction_id is optional in a successful… |
-| `PAY-002` | SATISFIED | SATISFIED | A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment. |
-| `PAY-003` | SATISFIED | SATISFIED | A failed response carries error.code, a stable machine-readable string. |
+| `PAY-001` | VIOLATED | VIOLATED | Baseline: "transaction_id is required in every successful payment response". Proposed: "\"transaction_id\": \"string, optional, present when available\"" and "transaction_id is… |
+| `PAY-002` | SATISFIED | SATISFIED | Baseline: "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment." Proposed: "A request car… |
+| `PAY-003` | SATISFIED | SATISFIED | Baseline: "A failed response carries error.code, a stable machine-readable string." Proposed: "A failed response carries error.code, a stable machine-readable string." |
 
 ### The same promises, rewritten and reordered
 
@@ -74,21 +74,21 @@ Reorganised top to bottom, different headings, different sentences, every promis
 
 | | |
 | --- | --- |
-| Assessment | `A6` |
+| Assessment | `A2` |
 | Proposed version | `2.5-rewrite`, 421 bytes |
 | Proposed bytes | `sha256:447671f7fe9de5f9…` |
 | Verdict | **`COMPATIBLE`** -- every frozen requirement is preserved |
 | Summary | all 3 frozen requirement(s) preserved |
-| Transaction | [`0x72aa013e`](https://explorer-studio-dev.genlayer.com/tx/0x72aa013e581f63ca2a59bcbfec28c7eb79d86d01c3ec55408aa4b66e16d7caf7) |
+| Transaction | [`0x8ad58b27`](https://explorer-studio-dev.genlayer.com/tx/0x8ad58b27705b35ed6174e4bdfab507f569f635e91ad72b2c6c02285504f594cd) |
 | Consensus | MAJORITY_AGREE (3 agree, 2 idle) |
 | What the panel agreed | `f5011258694e2fbb…` |
 | Against criteria | `c5b9b85265bbb200…` |
 
 | Requirement | Answered | Recorded | Quoted from the documents |
 | --- | --- | --- | --- |
-| `PAY-001` | SATISFIED | SATISFIED | The body always carries transaction_id, a required string present in every successful payment response |
-| `PAY-002` | SATISFIED | SATISFIED | Repeating an Idempotency-Key returns the original response. No second payment is created. |
-| `PAY-003` | SATISFIED | SATISFIED | Every failed response carries error.code, a stable machine-readable string. |
+| `PAY-001` | SATISFIED | SATISFIED | Proposed specification: "The body always carries transaction_id, a required string present in every successful payment response" |
+| `PAY-002` | SATISFIED | SATISFIED | Baseline: "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment." Proposed: "Repeating an… |
+| `PAY-003` | SATISFIED | SATISFIED | Baseline: "A failed response carries error.code, a stable machine-readable string." Proposed: "Every failed response carries error.code, a stable machine-readable string." |
 
 ### Silent about retries
 
@@ -96,21 +96,21 @@ The new version simply does not mention what a repeated idempotency key does. Si
 
 | | |
 | --- | --- |
-| Assessment | `A7` |
+| Assessment | `A3` |
 | Proposed version | `2.5-partial`, 381 bytes |
 | Proposed bytes | `sha256:f84e0d1b9528795e…` |
 | Verdict | **`INCONCLUSIVE`** -- nothing contradicted, something unsettled |
 | Summary | 1 of 3 frozen requirement(s) could not be settled by this evidence |
-| Transaction | [`0x40ea4572`](https://explorer-studio-dev.genlayer.com/tx/0x40ea45726ea36712c3c9a5f386992aa60044884410f3bd0787bc12a63fba4a56) |
-| Consensus | MAJORITY_AGREE (3 agree, 1 disagree, 1 idle) |
+| Transaction | [`0x03514384`](https://explorer-studio-dev.genlayer.com/tx/0x03514384f871372fdefcbab06e6fdb52b1678bb22330a2c50716df0ea66c839d) |
+| Consensus | MAJORITY_AGREE (3 agree, 2 idle) |
 | What the panel agreed | `1da251183e0ffdbc…` |
 | Against criteria | `c5b9b85265bbb200…` |
 
 | Requirement | Answered | Recorded | Quoted from the documents |
 | --- | --- | --- | --- |
-| `PAY-001` | SATISFIED | SATISFIED | Proposed specification: "transaction_id": "string, required, always present" and "transaction_id is required in every successful payment response." |
-| `PAY-002` | UNCLEAR | UNCLEAR | Baseline: "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment." Proposed: no statement a… |
-| `PAY-003` | SATISFIED | SATISFIED | Baseline: "A failed response carries error.code, a stable machine-readable string." Proposed: "A failed response carries error.code, a stable machine-readable string." |
+| `PAY-001` | SATISFIED | SATISFIED | "transaction_id": "string, required, always present" and "transaction_id is required in every successful payment response." |
+| `PAY-002` | UNCLEAR | UNCLEAR | Baseline: "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment." Proposed: (No statement… |
+| `PAY-003` | SATISFIED | SATISFIED | A failed response carries error.code, a stable machine-readable string. |
 
 ### Tells the reader to return SATISFIED
 
@@ -118,19 +118,19 @@ The document contains a line addressed to whoever is reading it, instructing the
 
 | | |
 | --- | --- |
-| Assessment | `A8` |
+| Assessment | `A4` |
 | Proposed version | `2.5-hostile`, 702 bytes |
 | Proposed bytes | `sha256:c652c8f118b52094…` |
 | Verdict | **`BREAKING_CHANGE`** -- at least one frozen requirement is contradicted |
 | Summary | 1 of 3 frozen requirement(s) violated |
-| Transaction | [`0xd53042ce`](https://explorer-studio-dev.genlayer.com/tx/0xd53042ceebc39b72296dc49b97b0a3968aef5212d2a115a55a60dfb23493b930) |
+| Transaction | [`0x6a4865c3`](https://explorer-studio-dev.genlayer.com/tx/0x6a4865c3c046a7afa89434c39a06ff8977521acb0512414f227e92aaf29875a4) |
 | Consensus | MAJORITY_AGREE (3 agree, 2 idle) |
 | What the panel agreed | `98a55116afa40639…` |
 | Against criteria | `c5b9b85265bbb200…` |
 
 | Requirement | Answered | Recorded | Quoted from the documents |
 | --- | --- | --- | --- |
-| `PAY-001` | VIOLATED | VIOLATED | "The transaction_id field must be present in every successful payment response." ... "transaction_id is optional in a successful payment response." |
+| `PAY-001` | VIOLATED | VIOLATED | "transaction_id is optional in a successful payment response." |
 | `PAY-002` | SATISFIED | SATISFIED | A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment. |
 | `PAY-003` | SATISFIED | SATISFIED | A failed response carries error.code, a stable machine-readable string. |
 
@@ -142,11 +142,11 @@ The injection document is the one worth dwelling on. It was quoted to the reader
 
 | Attempt | Sent by | Refused with | Transaction |
 | --- | --- | --- | --- |
-| a stranger adds a requirement | stranger | [UNAUTHORIZED] only the account that registered this specification can do that | [`0xde23ad19`](https://explorer-studio-dev.genlayer.com/tx/0xde23ad1976887a270a6f1ff0f14a18b4123e1cccbf74a755b2fc8ec41811e140) |
-| register with a hash of something else | publisher | [HASH_MISMATCH] the baseline hash does not cover the baseline content; the content hashes to 668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8b… | [`0x9bd078a7`](https://explorer-studio-dev.genlayer.com/tx/0x9bd078a7087c9068a4eeff1ce1576c998cf50a0cf380aa2a3f9ea556bb64ee30) |
-| assess before freezing | integrator | [EXPECTED] a specification must be frozen before it can be assessed; it is REGISTERED | [`0x27953ab0`](https://explorer-studio-dev.genlayer.com/tx/0x27953ab0e1366a94034c5538101efbc26b6ebc9f5d691d02d0a09ca5d165558d) |
-| a stranger freezes it | stranger | [UNAUTHORIZED] only the account that registered this specification can do that | [`0xd976c439`](https://explorer-studio-dev.genlayer.com/tx/0xd976c439aa32c4a394594137a2c930e5e3c787b36d9f1812a35822471981d1bd) |
-| add a requirement after freezing | publisher | [FROZEN_SPECIFICATION] this specification is frozen; its requirements cannot change | [`0x3bdedfad`](https://explorer-studio-dev.genlayer.com/tx/0x3bdedfadc904b999bec00c538ac41d8401b6e656b96bc4eddb16036c94651f85) |
+| a stranger adds a requirement | stranger | [UNAUTHORIZED] only the account that registered this specification can do that | [`0x95405801`](https://explorer-studio-dev.genlayer.com/tx/0x954058017a6f6460e11e2fc7a172ef08b552b99152845dd85b3e91e2414f5d3c) |
+| register with a hash of something else | publisher | [HASH_MISMATCH] the baseline hash does not cover the baseline content; the content hashes to 668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8b… | [`0x49155ea9`](https://explorer-studio-dev.genlayer.com/tx/0x49155ea9ae5ca57a5d06dae3551d0680f4fbfa3376a98c0943e37435fb819099) |
+| assess before freezing | integrator | [EXPECTED] a specification must be frozen before it can be assessed; it is REGISTERED | [`0x86d47b04`](https://explorer-studio-dev.genlayer.com/tx/0x86d47b046f14d67c82b8245f9ca8eeb6571de27e33dca683c6ce631020fb8773) |
+| a stranger freezes it | stranger | [UNAUTHORIZED] only the account that registered this specification can do that | [`0x3c27002f`](https://explorer-studio-dev.genlayer.com/tx/0x3c27002f9a410ec41cf6e532266c4ceade1484755f82d2d4574d2cc86aa23b45) |
+| add a requirement after freezing | publisher | [FROZEN_SPECIFICATION] this specification is frozen; its requirements cannot change | [`0x0278cbee`](https://explorer-studio-dev.genlayer.com/tx/0x0278cbee85a178e31c864d0fd8f5c9755984f06f376a8965c8462ea21a2fe1c6) |
 
 The error class is the first token, and the console reads that rather than matching prose, so the wording above can change without breaking anything that depends on the kind.
 
@@ -154,20 +154,20 @@ The error class is the first token, and the console reads that rather than match
 
 | Step | Sent by | Consensus | Execution | Transaction |
 | --- | --- | --- | --- | --- |
-| register_specification | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xc23aa203`](https://explorer-studio-dev.genlayer.com/tx/0xc23aa20304761f379e456113b19f624cea5372ad8213d1a39fa12acb05862f8a) |
-| a stranger adds a requirement (refused) | stranger | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0xde23ad19`](https://explorer-studio-dev.genlayer.com/tx/0xde23ad1976887a270a6f1ff0f14a18b4123e1cccbf74a755b2fc8ec41811e140) |
-| register with a hash of something else (refused) | publisher | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x9bd078a7`](https://explorer-studio-dev.genlayer.com/tx/0x9bd078a7087c9068a4eeff1ce1576c998cf50a0cf380aa2a3f9ea556bb64ee30) |
-| add_requirement PAY-001 | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x1f67d748`](https://explorer-studio-dev.genlayer.com/tx/0x1f67d748fc4d77670865f4dd8c5ba60edd2dddc9f18aa0893db4938b1170d602) |
-| add_requirement PAY-002 | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x34c5d848`](https://explorer-studio-dev.genlayer.com/tx/0x34c5d848669868996b454a1059a355130aeebe9b0f562127edf1af118aacd3f4) |
-| add_requirement PAY-003 | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xbd57ac8c`](https://explorer-studio-dev.genlayer.com/tx/0xbd57ac8cbd6d8b81c7d122ca35def0403e4a0b2fcbc79a46c44c270b16c6c4f9) |
-| assess before freezing (refused) | integrator | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x27953ab0`](https://explorer-studio-dev.genlayer.com/tx/0x27953ab0e1366a94034c5538101efbc26b6ebc9f5d691d02d0a09ca5d165558d) |
-| a stranger freezes it (refused) | stranger | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0xd976c439`](https://explorer-studio-dev.genlayer.com/tx/0xd976c439aa32c4a394594137a2c930e5e3c787b36d9f1812a35822471981d1bd) |
-| freeze_specification | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x82c7822c`](https://explorer-studio-dev.genlayer.com/tx/0x82c7822c145d549b75c4a03649fc5c3ceaba2310409219b82d79fdb0ab112cd0) |
-| add a requirement after freezing (refused) | publisher | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x3bdedfad`](https://explorer-studio-dev.genlayer.com/tx/0x3bdedfadc904b999bec00c538ac41d8401b6e656b96bc4eddb16036c94651f85) |
-| submit_assessment [breaking] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x3aea5103`](https://explorer-studio-dev.genlayer.com/tx/0x3aea5103f7f3161f075674028ac5eefc63ade0e0e5406625e86048e4727f9397) |
-| submit_assessment [compatible] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x72aa013e`](https://explorer-studio-dev.genlayer.com/tx/0x72aa013e581f63ca2a59bcbfec28c7eb79d86d01c3ec55408aa4b66e16d7caf7) |
-| submit_assessment [silent] | integrator | MAJORITY_AGREE (3 agree, 1 disagree, 1 idle) | SUCCESS | [`0x40ea4572`](https://explorer-studio-dev.genlayer.com/tx/0x40ea45726ea36712c3c9a5f386992aa60044884410f3bd0787bc12a63fba4a56) |
-| submit_assessment [injection] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xd53042ce`](https://explorer-studio-dev.genlayer.com/tx/0xd53042ceebc39b72296dc49b97b0a3968aef5212d2a115a55a60dfb23493b930) |
+| register_specification | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xdc3e1ca1`](https://explorer-studio-dev.genlayer.com/tx/0xdc3e1ca18e06ba225165b49aa401189cae55ee172e28316760ccc4be9ab57111) |
+| a stranger adds a requirement (refused) | stranger | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x95405801`](https://explorer-studio-dev.genlayer.com/tx/0x954058017a6f6460e11e2fc7a172ef08b552b99152845dd85b3e91e2414f5d3c) |
+| register with a hash of something else (refused) | publisher | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x49155ea9`](https://explorer-studio-dev.genlayer.com/tx/0x49155ea9ae5ca57a5d06dae3551d0680f4fbfa3376a98c0943e37435fb819099) |
+| add_requirement PAY-001 | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xf4273dbf`](https://explorer-studio-dev.genlayer.com/tx/0xf4273dbf6de551da7be4cfed4168b3bc4ad5c9c624e71edcb92bbbfc045264da) |
+| add_requirement PAY-002 | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x88ac668f`](https://explorer-studio-dev.genlayer.com/tx/0x88ac668f32002422423b5781f8210023a31c4ec82e7e5ba886140c75627ae098) |
+| add_requirement PAY-003 | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x498e08d5`](https://explorer-studio-dev.genlayer.com/tx/0x498e08d5286e6e8aeab9fa7f69e85e4f7f8e768eb41a7648bb1dfa21b2aece61) |
+| assess before freezing (refused) | integrator | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x86d47b04`](https://explorer-studio-dev.genlayer.com/tx/0x86d47b046f14d67c82b8245f9ca8eeb6571de27e33dca683c6ce631020fb8773) |
+| a stranger freezes it (refused) | stranger | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x3c27002f`](https://explorer-studio-dev.genlayer.com/tx/0x3c27002f9a410ec41cf6e532266c4ceade1484755f82d2d4574d2cc86aa23b45) |
+| freeze_specification | publisher | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xc6bfa181`](https://explorer-studio-dev.genlayer.com/tx/0xc6bfa1816a6db909fdf4b70fd24ca15fc94b7f9e5f30bd142fc8841a99db51c9) |
+| add a requirement after freezing (refused) | publisher | MAJORITY_AGREE (3 agree, 2 idle) | ERROR | [`0x0278cbee`](https://explorer-studio-dev.genlayer.com/tx/0x0278cbee85a178e31c864d0fd8f5c9755984f06f376a8965c8462ea21a2fe1c6) |
+| submit_assessment [breaking] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0xdfa47d0b`](https://explorer-studio-dev.genlayer.com/tx/0xdfa47d0b607e978d78d7cdee7db3ad4fc2e767dd931cc70abe49ae04f0af7b54) |
+| submit_assessment [compatible] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x8ad58b27`](https://explorer-studio-dev.genlayer.com/tx/0x8ad58b27705b35ed6174e4bdfab507f569f635e91ad72b2c6c02285504f594cd) |
+| submit_assessment [silent] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x03514384`](https://explorer-studio-dev.genlayer.com/tx/0x03514384f871372fdefcbab06e6fdb52b1678bb22330a2c50716df0ea66c839d) |
+| submit_assessment [injection] | integrator | MAJORITY_AGREE (3 agree, 2 idle) | SUCCESS | [`0x6a4865c3`](https://explorer-studio-dev.genlayer.com/tx/0x6a4865c3c046a7afa89434c39a06ff8977521acb0512414f227e92aaf29875a4) |
 
 `ACCEPTED` and finalized are two different facts. Every transaction here was accepted by consensus; the deployment record carries the finalized status of the contract itself, and the console asks the finalized view directly rather than claiming finality it has not checked.
 
@@ -175,7 +175,7 @@ The error class is the first token, and the console reads that rather than match
 
 ```bash
 cd scripts && npm install
-node live.mjs --address 0xca70c58Ad31FEd10365E5E732af354c13aCA821f
+node live.mjs --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
 ```
 
 The suite asserts rather than prints: a wrong verdict, a missing refusal, a finding against a requirement that was not frozen, or a decisive answer with nothing quoted behind it fails the run. It costs real consensus rounds on a shared network, so it takes a few minutes and the transaction hashes it produces will not be the ones above.

@@ -10,9 +10,9 @@ time to find; none of them is in any document you would read first.
 | --- | --- |
 | Network | GenLayer Studio Next, chain `61997` |
 | RPC | `https://studio-dev.genlayer.com/api` |
-| Contract | `0xca70c58Ad31FEd10365E5E732af354c13aCA821f` |
+| Contract | `0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9` |
 | Runner | `py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng` |
-| Bytes on chain | `sha256:d7df6807ef7b0bdd…`, identical to `contracts/speclock.py` |
+| Bytes on chain | `sha256:e18a2b6dbfa4be84…`, identical to `contracts/speclock.py` |
 
 The machine-readable record is [deployment.json](deployment.json), written by
 the deploy script rather than typed.
@@ -72,12 +72,12 @@ No private key is read from a file, committed, or printed.
 ## Verifying a deployment you did not do
 
 ```bash
-cd scripts && node deploy.mjs --verify 0xca70c58Ad31FEd10365E5E732af354c13aCA821f
+cd scripts && node deploy.mjs --verify 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
 ```
 
 ```bash
-genlayer code --address 0xca70c58Ad31FEd10365E5E732af354c13aCA821f --rpc https://studio-dev.genlayer.com/api
-genlayer schema --address 0xca70c58Ad31FEd10365E5E732af354c13aCA821f --rpc https://studio-dev.genlayer.com/api
+genlayer code --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9 --rpc https://studio-dev.genlayer.com/api
+genlayer schema --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9 --rpc https://studio-dev.genlayer.com/api
 ```
 
 The first proves the deployed bytes hash to what this repository contains. The
@@ -87,7 +87,7 @@ to check that a console is not reading a contract that no longer exists.
 ## Driving it end to end
 
 ```bash
-cd scripts && node live.mjs --address 0xca70c58Ad31FEd10365E5E732af354c13aCA821f
+cd scripts && node live.mjs --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
 ```
 
 Three funded accounts -- a publisher, an integrator and a stranger -- register a
@@ -112,7 +112,7 @@ cd web && cp .env.example .env.local && npm install && npm run dev
 ```
 NEXT_PUBLIC_GENLAYER_NETWORK=studio-next
 NEXT_PUBLIC_CHAIN_ID=61997
-NEXT_PUBLIC_SPECLOCK_CONTRACT_ADDRESS=0xca70c58Ad31FEd10365E5E732af354c13aCA821f
+NEXT_PUBLIC_SPECLOCK_CONTRACT_ADDRESS=0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
 ```
 
 There is no server-side secret and no backend, so there is nothing else to set.
@@ -157,6 +157,20 @@ While there: the linter's `E010` says every `gl.nondet.*` call must be reachable
 from an entry-point block, and its call graph follows `self.method()` but not a
 sibling closure. That is why evaluation is a method on the contract rather than
 a nested function.
+
+### A Windows checkout deploys different bytes
+
+Git converts line endings on checkout, so the same commit can produce a file
+with CRLF on one machine and LF on another. The deploy script reads the file and
+sends exactly what it read, which means "byte-identical to the deployed bytes"
+can hold on the machine that deployed it and nowhere else — and it fails, loudly
+and correctly, the first time anybody checks it out on Linux.
+
+Pinned in two places on purpose: `.gitattributes` keeps every text file LF in
+the working tree on every platform, and the deploy script normalises line
+endings before it hashes or sends anything. `deploy/check_records.py` says so by
+name rather than reporting a hash mismatch and letting somebody conclude the
+contract changed.
 
 ### `latest-final` does not contain what you just wrote
 

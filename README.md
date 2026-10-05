@@ -11,7 +11,7 @@
 | | |
 | --- | --- |
 | Network | GenLayer Studio Next, chain `61997` |
-| Contract | [`0xca70c58Ad31FEd10365E5E732af354c13aCA821f`](https://explorer-studio-dev.genlayer.com/address/0xca70c58Ad31FEd10365E5E732af354c13aCA821f) |
+| Contract | [`0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9`](https://explorer-studio-dev.genlayer.com/address/0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9) |
 | Source | [`contracts/speclock.py`](contracts/speclock.py), byte-identical to the deployed bytes ([record](docs/deployment.json)) |
 | Runner | `py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng` |
 | Console | `web/`, Next.js App Router, wallet-signed writes, no server of its own |
