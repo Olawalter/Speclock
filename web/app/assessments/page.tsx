@@ -6,7 +6,8 @@ import { useMemo, useState } from "react";
 import { configResult } from "@/lib/config/env";
 import { reads } from "@/lib/genlayer/contract";
 import { LIST_POLL, useRead } from "@/lib/genlayer/hooks";
-import { assessmentLabel, formatTime, shortAddress } from "@/lib/format/present";
+import { assessmentLabel, formatTime, outcomeSentence, shortAddress }
+  from "@/lib/format/present";
 import { ConfigProblem } from "@/components/config-problem";
 import { Empty, Loading, Problem } from "@/components/empty";
 import { VerdictChip } from "@/components/status";
@@ -78,7 +79,7 @@ export default function Assessments() {
                     </span>
                   </div>
                   <p className="mt-2 text-[15px] font-[540]">{assessment.specification_name}</p>
-                  <p className="mt-0.5 text-sm text-[var(--slate)]">{assessment.summary}</p>
+                  <p className="mt-0.5 text-sm text-[var(--slate)]">{outcomeSentence(assessment.verdict, assessment.findings)}</p>
                   <p className="mt-2 text-xs text-[var(--slate)]">
                     <span className="mono">{assessment.baseline_version}</span> &rarr;{" "}
                     <span className="mono">{assessment.proposed_version}</span>

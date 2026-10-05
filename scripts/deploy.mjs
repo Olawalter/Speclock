@@ -2,6 +2,7 @@
  * Deploy SPECLOCK to Studio Next and prove the chain holds this source.
  *
  *   node scripts/deploy.mjs
+ *   node scripts/deploy.mjs --verify 0x...   (checks an address, deploys nothing)
  *
  * Deploys the committed contract from a throwaway faucet-funded account, waits
  * for the transaction, then reads the contract back off the chain and compares
@@ -18,8 +19,8 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join, relative } from "node:path";
 
-import { CHAIN_ID, EXPLORER, RPC, RUNNER, chain, client, fees, funded, refusal, rpc, votesOf }
-  from "./lib.mjs";
+import { CHAIN_ID, EXPLORER, RPC, RUNNER, chain, client, fees, funded, refusal, rpc,
+         votesOf, waitFor } from "./lib.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -43,12 +44,60 @@ function contractBytes(answer) {
   return Buffer.from(text, "base64");
 }
 
+/**
+ * Check an address somebody else deployed, without deploying anything.
+ *
+ * This is the half of the claim that matters to a reader: the repository says
+ * the chain holds these bytes, and this is how that is checked rather than
+ * believed. It sends no transaction and needs no funded account, so anybody can
+ * run it against the published address.
+ */
+async function verify(address, code, digest) {
+  const raw = contractBytes(await rpc("gen_getContractCode", [address]));
+  const onchain = createHash("sha256").update(raw).digest("hex");
+  const identical = onchain === digest;
+  say(`on-chain  ${raw.length} bytes  sha256 ${onchain}`);
+  say(`verdict   ${identical ? "MATCH: the chain holds this source"
+                             : "DIFFERENT: the chain holds something else"}`);
+
+  const schema = await rpc("gen_getContractSchema", [address]);
+  const methods = Object.keys(schema?.methods ?? {}).sort();
+  say(`methods   ${methods.length}: ${methods.join(", ")}`);
+
+  // A record that disagrees with the chain is worse than no record, so say so
+  // rather than letting a stale file keep making a claim.
+  try {
+    const record = JSON.parse(readFileSync(RECORD, "utf-8"));
+    if (record.contract_address?.toLowerCase() === address.toLowerCase()) {
+      const agrees = record.onchain_sha256 === onchain;
+      say(`record    ${relative(ROOT, RECORD)} ${agrees ? "agrees" : "DISAGREES with the chain"}`);
+      if (!agrees) return 1;
+    } else {
+      say(`record    ${relative(ROOT, RECORD)} is about a different address`);
+    }
+  } catch {
+    say("record    none to compare against");
+  }
+  return identical ? 0 : 1;
+}
+
 async function main() {
   const code = readFileSync(SOURCE, "utf-8");
   const digest = createHash("sha256").update(code, "utf-8").digest("hex");
   const head = commit();
   say(`source    ${relative(ROOT, SOURCE)} @ ${head.slice(0, 12) || "uncommitted"}  `
       + `${Buffer.byteLength(code, "utf-8")} bytes  sha256 ${digest}`);
+
+  const at = process.argv.indexOf("--verify");
+  if (at > 0) {
+    const address = process.argv[at + 1];
+    if (!address?.startsWith("0x")) {
+      say("pass an address: node deploy.mjs --verify 0x...");
+      return 1;
+    }
+    say(`address   ${address} (verifying only; nothing is deployed)`);
+    return verify(address, code, digest);
+  }
 
   const pinned = code.split('"')[3];
   if (pinned !== RUNNER) {
@@ -64,8 +113,7 @@ async function main() {
   const hash = typeof tx === "string" ? tx : tx?.hash ?? String(tx);
   say(`submitted ${hash}`);
 
-  const accepted = await gl.waitForTransactionReceipt({ hash, status: "ACCEPTED",
-                                                        interval: 5000, retries: 300 });
+  const accepted = await waitFor(gl, hash, "decided", { interval: 5000, retries: 300 });
   const leader = accepted?.consensus_data?.leader_receipt?.[0] ?? {};
   const address = accepted?.data?.contract_address
     ?? accepted?.tx_data_decoded?.contract_address
@@ -83,7 +131,7 @@ async function main() {
   // claim in the file than the evidence supports.
   let finality = "ACCEPTED";
   try {
-    await gl.waitForTransactionReceipt({ hash, status: "FINALIZED", interval: 10000,
+    await gl.waitForTransactionReceipt({ hash, waitUntil: "finalized", interval: 10000,
                                          retries: 120 });
     finality = "FINALIZED";
     say("finalized FINALIZED");

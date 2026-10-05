@@ -7,7 +7,8 @@ import { configResult } from "@/lib/config/env";
 import { reads } from "@/lib/genlayer/contract";
 import { useRead } from "@/lib/genlayer/hooks";
 import {
-  assessmentLabel, byteSize, formatTime, shortAddress, shortDigest, specificationLabel,
+  assessmentLabel, byteSize, formatTime, outcomeSentence, shortAddress,
+  shortDigest, specificationLabel,
 } from "@/lib/format/present";
 import { ConfigProblem } from "@/components/config-problem";
 import { Empty, Loading, Problem } from "@/components/empty";
@@ -150,7 +151,7 @@ export default function SpecificationPage({ params }: { params: Promise<{ id: st
                       {assessment.baseline_version} &rarr; {assessment.proposed_version}
                     </span>
                     <span className="min-w-0 flex-1 truncate text-sm text-[var(--slate)]">
-                      {assessment.summary}
+                      {outcomeSentence(assessment.verdict, assessment.findings)}
                     </span>
                     <VerdictChip verdict={assessment.verdict} />
                   </Link>

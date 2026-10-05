@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { configResult } from "@/lib/config/env";
 import { FINAL, NON_FINAL, contractAddress, readClient } from "@/lib/genlayer/client";
 import type { Read } from "@/lib/genlayer/contract";
+import { skipRead } from "@/lib/genlayer/polling";
 
 export type ReadState<T> = {
   data: T | undefined;
@@ -23,8 +24,12 @@ const POLL_MS = 90_000;
  * the person just sent reads the newest state, because a write is accepted long
  * before it is final and the finalized view does not contain it yet.
  *
- * Polling pauses while the tab is hidden, but the first read always happens: a
- * page opened in a background tab still has to load.
+ * Polling pauses while the tab is hidden. Reading does not: what is skipped is
+ * a *refresh* of something already in hand, never the first read of something
+ * that is not. The difference matters because a page can change what it is
+ * asking for while the tab is in the background -- somebody opens an assessment
+ * in a new tab, or moves between two of them and looks away -- and a read
+ * skipped then has nothing to trigger it again.
  */
 export function useRead<T>(
   read: Read<T> | undefined,
@@ -35,7 +40,9 @@ export function useRead<T>(
   const [error, setError] = useState<string>();
   const [settled, setSettled] = useState("");
   const [nonce, setNonce] = useState(0);
-  const loadedOnce = useRef(false);
+  // Which key the last completed read was for, as a ref so the hidden-tab check
+  // reads it without re-running the effect.
+  const loadedKey = useRef("");
 
   const key = read ? `${read.functionName}:${JSON.stringify(read.args)}:${final}` : "";
 
@@ -49,7 +56,8 @@ export function useRead<T>(
     let cancelled = false;
 
     const load = async () => {
-      if (loadedOnce.current && typeof document !== "undefined" && document.hidden) return;
+      if (skipRead({ key, loadedKey: loadedKey.current,
+                     hidden: typeof document !== "undefined" && document.hidden })) return;
       try {
         const answer = await readClient().readContract({
           address: contractAddress(),
@@ -77,7 +85,7 @@ export function useRead<T>(
         }
       } finally {
         if (!cancelled) {
-          loadedOnce.current = true;
+          loadedKey.current = key;
           setSettled(key);
         }
       }

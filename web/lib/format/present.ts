@@ -85,6 +85,44 @@ export function relativeTime(iso: string, now: number): string {
   return past ? `${value} ${plural} ago` : `in ${value} ${plural}`;
 }
 
+const NUMBER_WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight",
+                      "nine", "ten", "eleven", "twelve"];
+
+const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
+const sentenceCase = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/**
+ * What an assessment came to, in a sentence.
+ *
+ * The contract records its own summary, and it is a record: "1 of 3 frozen
+ * requirement(s) violated" is the right shape for something being hashed and
+ * the wrong shape for something being read. The sentence here is derived from
+ * the same findings under the same rule, so it says the same thing in words a
+ * person would use.
+ */
+export function outcomeSentence(verdict: string, findings: { effective_status: string }[]) {
+  const total = findings.length;
+  if (total === 0) return "Nothing was assessed.";
+  const of = (n: number) =>
+    `${sentenceCase(numberWord(n))} of ${numberWord(total)} frozen requirements`;
+
+  if (verdict === "BREAKING_CHANGE") {
+    const violated = findings.filter((f) => f.effective_status === "VIOLATED").length;
+    return total === 1
+      ? "The frozen requirement is contradicted."
+      : `${of(violated)} ${violated === 1 ? "is" : "are"} contradicted.`;
+  }
+  if (verdict === "INCONCLUSIVE") {
+    const unclear = findings.filter((f) => f.effective_status === "UNCLEAR").length;
+    return total === 1
+      ? "The evidence does not settle the frozen requirement."
+      : `${of(unclear)} ${unclear === 1 ? "is" : "are"} not settled by this evidence.`;
+  }
+  return total === 1
+    ? "The frozen requirement is preserved."
+    : `All ${numberWord(total)} frozen requirements are preserved.`;
+}
+
 export const byteSize = (bytes: number) =>
   bytes < 1024 ? `${bytes} bytes` : `${(bytes / 1024).toFixed(1)} kB`;
 

@@ -1,0 +1,111 @@
+# Everything here runs without touching a network.
+#
+# The live suite is deliberately not in CI: it spends real consensus rounds on a
+# shared test network, and a job that fails because somebody else was using the
+# faucet teaches a reader to ignore red. It is run by hand before a deployment,
+# and its record is committed -- which this workflow then holds to, by
+# regenerating the published report and failing if it drifts.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    name: contract -- lint and Direct Mode
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+          # A plain install silently keeps 0.11.0, which cannot validate against
+          # a genvm-manager v0.6 bundle at all.
+          python -m pip install --force-reinstall --no-deps genvm-linter==0.11.1rc2
+      - name: The runner pin is the one Studio Next serves
+        run: |
+          grep -q 'py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng' \
+            contracts/speclock.py
+          # test and latest are local aliases; no GenLayer network accepts them.
+          ! grep -qE 'py-genlayer:(test|latest)' contracts/speclock.py
+      - name: genvm-lint
+        run: genvm-lint check contracts/speclock.py --json
+      - name: Direct Mode
+        run: python -m pytest tests/direct -q
+
+  mutants:
+    name: mutants ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    needs: contract
+    strategy:
+      fail-fast: false
+      matrix:
+        # Sharded because each mutant runs the whole suite. The shards cover
+        # every mutant between them; --start/--count exist for exactly this.
+        include:
+          - { shard: "1 of 4", start: 0, count: 10 }
+          - { shard: "2 of 4", start: 10, count: 10 }
+          - { shard: "3 of 4", start: 20, count: 10 }
+          - { shard: "4 of 4", start: 30, count: 10 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Break it on purpose
+        run: python deploy/mutate.py --start ${{ matrix.start }} --count ${{ matrix.count }}
+
+  console:
+    name: console -- lint, types, tests and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # 22.12 or newer: some of the native bindings this toolchain pulls in
+          # are not published for 22.11.
+          node-version: "22.12.0"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+        working-directory: web
+      - run: npm run lint
+        working-directory: web
+      - run: npm run typecheck
+        working-directory: web
+      - name: Unit tests, including the schemas against the live record
+        run: npm run test
+        working-directory: web
+      - name: Build
+        working-directory: web
+        env:
+          NEXT_PUBLIC_GENLAYER_NETWORK: studio-next
+          NEXT_PUBLIC_CHAIN_ID: "61997"
+          NEXT_PUBLIC_SPECLOCK_CONTRACT_ADDRESS: "0x0000000000000000000000000000000000000000"
+        run: npm run build
+
+  records:
+    name: records -- the published claims match the records
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The deployment record must describe the contract that is in the
+      # repository now, the live record must be about the contract that record
+      # names, and the published report must still be what the live record
+      # generates. A claim like that decays silently; this is what notices.
+      - name: The records agree with each other
+        run: python deploy/check_records.py

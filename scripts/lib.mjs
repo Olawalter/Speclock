@@ -110,6 +110,87 @@ export function client(account) {
   return createClient({ chain, account });
 }
 
+/**
+ * Does this failure say anything about the request?
+ *
+ * A dropped socket, a gateway, a rate limiter: none of these are the chain's
+ * answer, and the studio endpoint produces them often enough that a long run
+ * will meet one. A real error -- a refusal, a bad argument -- is not in here,
+ * because retrying until a contract agrees with you is not verification.
+ */
+const TRANSPORT =
+  /fetch failed|other side closed|socket hang up|UND_ERR_SOCKET|ECONNRESET|ETIMEDOUT|EAI_AGAIN|network error|rate limit|\b50[234]\b/i;
+
+export function isTransport(problem) {
+  const seen = [problem?.message, problem?.details, problem?.shortMessage,
+                problem?.cause?.code, problem?.cause?.message,
+                problem?.cause?.cause?.code, problem?.cause?.cause?.message];
+  return TRANSPORT.test(seen.filter(Boolean).join(" "));
+}
+
+/** Retry a read-only call, but only while the failure says nothing about it. */
+export async function resilient(label, work, attempts = 6) {
+  let last;
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      return await work();
+    } catch (problem) {
+      if (!isTransport(problem)) throw problem;
+      last = problem;
+      await sleep(4000 * (attempt + 1));
+    }
+  }
+  throw new Error(`${label}: the transport kept failing: ${last?.message ?? last}`);
+}
+
+/**
+ * Send a write, and retry a lost connection only when the chain shows the
+ * previous attempt never arrived.
+ *
+ * A send that fails in transit is genuinely ambiguous: the request may have
+ * reached the node. Blindly retrying would register a second specification or
+ * submit a second assessment, so the account's nonce is read either side of the
+ * failure. If it moved, the transaction landed and its hash is simply lost --
+ * which is worth stopping for, because inventing a second one would put a
+ * duplicate on chain and call it a retry.
+ */
+export async function sendWrite(gl, account, write) {
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const before = await nonce(account.address);
+    try {
+      return await gl.writeContract({ ...write, fees: await fees(gl, write) });
+    } catch (problem) {
+      if (!isTransport(problem)) throw problem;
+      await sleep(5000);
+      if (await nonce(account.address) !== before) {
+        throw new Error(
+          `the connection dropped while sending ${write.functionName} and the account's nonce `
+          + "moved, so the transaction did reach the chain; its hash is lost. Retrying would "
+          + "send it a second time, so this run stops here. Start it again.");
+      }
+    }
+  }
+  throw new Error(`${write.functionName}: the transport kept failing before the send landed`);
+}
+
+async function nonce(address) {
+  return BigInt(await rpc("eth_getTransactionCount", [address, "latest"]) ?? 0);
+}
+
+/**
+ * Wait for a transaction, in the words the SDK uses now.
+ *
+ * `decided` is consensus reaching an answer, which includes a refusal the
+ * validators agreed about; `finalized` is that answer settling. They are
+ * different facts and nothing here collapses them into one.
+ */
+export async function waitFor(gl, hash, until = "decided", { interval = 4000,
+                                                             retries = 300 } = {}) {
+  return resilient(`waiting for ${short(hash)} to be ${until}`,
+                   () => gl.waitForTransactionReceipt({ hash, waitUntil: until,
+                                                        interval, retries }));
+}
+
 export const short = (value) => `${String(value).slice(0, 10)}...`;
 
 /** Pull the readable reason out of a refused transaction. */

@@ -7,7 +7,8 @@ import { configResult, explorerAddress } from "@/lib/config/env";
 import { reads, type Finding } from "@/lib/genlayer/contract";
 import { useRead } from "@/lib/genlayer/hooks";
 import {
-  assessmentLabel, byteSize, formatTime, shortAddress, shortDigest, specificationLabel,
+  assessmentLabel, byteSize, formatTime, outcomeSentence, shortAddress,
+  shortDigest, specificationLabel,
 } from "@/lib/format/present";
 import { ConfigProblem } from "@/components/config-problem";
 import { Loading, Problem } from "@/components/empty";
@@ -27,9 +28,16 @@ import { SeverityChip, StatusChip, VerdictChip } from "@/components/status";
  */
 export default function AssessmentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const assessment = useRead(reads.assessment(id));
+  // Read the newest state, so an assessment that was just accepted is visible.
+  const assessment = useRead(reads.assessment(id), { final: false });
+  // And ask the finalized view the same question. Whether it answers IS the
+  // finality: the contract cannot record the hash of the transaction that
+  // created it, but what the finalized state contains is a fact about the
+  // network and this is the honest way to read it.
+  const settled = useRead(reads.assessment(id), { final: true });
   const specification = useRead(
-    assessment.data ? reads.specification(assessment.data.specification_id) : undefined);
+    assessment.data ? reads.specification(assessment.data.specification_id) : undefined,
+    { final: false });
 
   if (!configResult.ok) return <ConfigProblem />;
   if (assessment.error) return <Problem message={assessment.error} />;
@@ -45,9 +53,10 @@ export default function AssessmentPage({ params }: { params: Promise<{ id: strin
             {assessmentLabel(record.assessment_id)}
           </span>
           <VerdictChip verdict={record.verdict} />
+          <FinalityChip finalized={Boolean(settled.data)} checking={settled.loading} />
         </div>
         <h1 className="max-w-3xl">{record.specification_name}</h1>
-        <p className="lede max-w-3xl">{record.summary}</p>
+        <p className="lede max-w-3xl">{outcomeSentence(record.verdict, record.findings)}</p>
 
         <dl className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-xs text-[var(--slate)]">
           <Pair term="Baseline">
@@ -219,6 +228,23 @@ function Document({ title, version, hash, bytes, read }: {
       </div>
     </div>
   );
+}
+
+/**
+ * Accepted and finalized are two different facts, so they get two different
+ * words. Nothing here calls a decision permanent while the network is still
+ * settling it.
+ */
+function FinalityChip({ finalized, checking }: { finalized: boolean; checking: boolean }) {
+  if (checking) return <span className="chip chip-outline">Checking finality</span>;
+  return finalized
+    ? <span className="chip chip-outline" title="Present in the finalized state on the network">
+        Finalized
+      </span>
+    : <span className="chip chip-pending"
+            title="The decision exists and can be read; the network is still settling it">
+        Accepted, not yet final
+      </span>;
 }
 
 function Pair({ term, children }: { term: string; children: React.ReactNode }) {

@@ -1,7 +1,10 @@
-genlayer-py==0.16.3
+# The contract is linted and tested locally; it is deployed with genlayer-js
+# from scripts/, which is the only SDK that can reach Studio Next today.
+# See docs/deployment.md for why.
+pytest>=8
+
 # 0.11.0 cannot validate against a genvm-manager v0.6 bundle: it looks for a
 # per-runner .tar and those bundles ship .zip, so validate fails for a runner
-# the bundle actually contains
+# the bundle actually contains. Plain `pip install` silently keeps 0.11.0 --
+# use --force-reinstall --no-deps.
 genvm-linter==0.11.1rc2
-pytest>=8
-eth-account>=0.13

@@ -16,8 +16,8 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-import { CHAIN_ID, EXPLORER, RPC, chain, client, fees, funded, refusal, rpc, sleep, votesOf }
-  from "./lib.mjs";
+import { CHAIN_ID, EXPLORER, RPC, chain, client, funded, refusal, resilient, rpc, sendWrite,
+         sleep, votesOf, waitFor } from "./lib.mjs";
 import { BASELINE, DESCRIPTION, NAME, PROPOSALS, REQUIREMENTS, SOURCE_REFERENCE, VERSION }
   from "./fixtures.mjs";
 
@@ -48,9 +48,8 @@ function check(condition, message) {
 /** Send one write and record what the network did with it. */
 async function send(who, functionName, args, { step, expectRefusal = false } = {}) {
   const write = { address: ADDRESS, functionName, args };
-  const hash = await who.gl.writeContract({ ...write, fees: await fees(who.gl, write) });
-  const receipt = await who.gl.waitForTransactionReceipt({ hash, status: "ACCEPTED",
-                                                           interval: 4000, retries: 300 });
+  const hash = await sendWrite(who.gl, who, write);
+  const receipt = await waitFor(who.gl, hash, "decided");
   const leader = receipt?.consensus_data?.leader_receipt?.[0] ?? {};
   const execution = leader.execution_result ?? null;
   const refused = execution !== null && execution !== "SUCCESS";
@@ -80,8 +79,9 @@ async function send(who, functionName, args, { step, expectRefusal = false } = {
  */
 async function read(functionName, args, { final = false } = {}) {
   const gl = client(undefined);
-  return gl.readContract({ address: ADDRESS, functionName, args,
-                           transactionHashVariant: final ? "latest-final" : "latest-nonfinal" });
+  return resilient(`reading ${functionName}`, () => gl.readContract({
+    address: ADDRESS, functionName, args,
+    transactionHashVariant: final ? "latest-final" : "latest-nonfinal" }));
 }
 
 /**

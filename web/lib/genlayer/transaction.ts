@@ -91,7 +91,7 @@ export async function runWrite(
     onPhase(state);
 
     const accepted = await client.waitForTransactionReceipt({
-      hash, status: "ACCEPTED", interval: 4000, retries: 300,
+      hash, waitUntil: "decided", interval: 4000, retries: 300,
     });
     const execution = accepted?.consensus_data?.leader_receipt?.[0]?.execution_result;
     const votes = votesOf(accepted);
@@ -114,7 +114,7 @@ export async function runWrite(
     onPhase(state);
     try {
       await client.waitForTransactionReceipt({
-        hash, status: "FINALIZED", interval: 8000, retries: 150,
+        hash, waitUntil: "finalized", interval: 8000, retries: 150,
       });
       state = { phase: "finalized", hash, votes };
     } catch {

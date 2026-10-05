@@ -2,25 +2,25 @@
   "network": "GenLayer Studio Next",
   "chain_id": 61997,
   "rpc": "https://studio-dev.genlayer.com/api",
-  "contract": "0x2B193328DEf1095AC9752F2F3CD182AF6a442e00",
-  "started_at": "2026-10-04T19:18:46Z",
+  "contract": "0xca70c58Ad31FEd10365E5E732af354c13aCA821f",
+  "started_at": "2026-10-05T03:32:33Z",
   "accounts": {
-    "publisher": "0x0229e176502e2359D0CFC91AEa75f3674f6f78F4",
-    "integrator": "0x7Abf1af3401F12F12A03c874fD0fb7E1b8e83E36",
-    "stranger": "0x0232557D7270b7eF8Cc2d6333e89ADB228f1050d"
+    "publisher": "0x21E5CD76889826C16dEAcf5B98368e814f3f99C6",
+    "integrator": "0x4D87d7e494cc6458327e4FC8235bC4b9DBd6CF17",
+    "stranger": "0x789Ba0F32b15567611D67a3d9d241883D00E5A4A"
   },
   "transactions": [
     {
       "step": "register_specification",
       "function": "register_specification",
       "caller": "publisher",
-      "tx": "0xdf58adb12eed8dbab762ce625ebbc3c1db2620994f90427df66c48cea9c4baac",
+      "tx": "0xc23aa20304761f379e456113b19f624cea5372ad8213d1a39fa12acb05862f8a",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
       "votes": {
-        "agree": 4,
-        "idle": 1
+        "agree": 3,
+        "idle": 2
       },
       "refused": false
     },
@@ -28,7 +28,7 @@
       "step": "a stranger adds a requirement (refused)",
       "function": "add_requirement",
       "caller": "stranger",
-      "tx": "0xe36d8fcf7dd4097c906f84e94c42fc1ea59a74852935d8688afbb1e1db829e7d",
+      "tx": "0xde23ad1976887a270a6f1ff0f14a18b4123e1cccbf74a755b2fc8ec41811e140",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -43,13 +43,13 @@
       "step": "register with a hash of something else (refused)",
       "function": "register_specification",
       "caller": "publisher",
-      "tx": "0x28cd60c266998f2b4e4250b7d35a84698fbf923e22e95edd7a0138916756b27e",
+      "tx": "0x9bd078a7087c9068a4eeff1ce1576c998cf50a0cf380aa2a3f9ea556bb64ee30",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
       "votes": {
-        "agree": 3,
-        "idle": 2
+        "idle": 2,
+        "agree": 3
       },
       "refused": true,
       "refusal": "[HASH_MISMATCH] the baseline hash does not cover the baseline content; the content hashes to 668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf"
@@ -58,7 +58,7 @@
       "step": "add_requirement PAY-001",
       "function": "add_requirement",
       "caller": "publisher",
-      "tx": "0x0a85552bb7043a51a68be9a90f99ea9637d038fe2099f592761dfa3365a2f596",
+      "tx": "0x1f67d748fc4d77670865f4dd8c5ba60edd2dddc9f18aa0893db4938b1170d602",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
@@ -72,7 +72,7 @@
       "step": "add_requirement PAY-002",
       "function": "add_requirement",
       "caller": "publisher",
-      "tx": "0x7074367f9c950b5f7ce1d0f28f56cc0baa7037c48a6e1730432b4d42979fa01a",
+      "tx": "0x34c5d848669868996b454a1059a355130aeebe9b0f562127edf1af118aacd3f4",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
@@ -86,7 +86,7 @@
       "step": "add_requirement PAY-003",
       "function": "add_requirement",
       "caller": "publisher",
-      "tx": "0x97b81fcf380860ecc794a5517e4e25fbc7e176b74a7263576134b5104b783393",
+      "tx": "0xbd57ac8cbd6d8b81c7d122ca35def0403e4a0b2fcbc79a46c44c270b16c6c4f9",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
@@ -100,7 +100,7 @@
       "step": "assess before freezing (refused)",
       "function": "submit_assessment",
       "caller": "integrator",
-      "tx": "0x3e94983d018e82e086a0f6a599d6c0da1aa2b66f05f0735c3e25f03801e92425",
+      "tx": "0x27953ab0e1366a94034c5538101efbc26b6ebc9f5d691d02d0a09ca5d165558d",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -115,7 +115,7 @@
       "step": "a stranger freezes it (refused)",
       "function": "freeze_specification",
       "caller": "stranger",
-      "tx": "0x8c2c9a665da37568198af5a6384933e2ab1b085ed74ebdd634d418799975a8a9",
+      "tx": "0xd976c439aa32c4a394594137a2c930e5e3c787b36d9f1812a35822471981d1bd",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -130,13 +130,13 @@
       "step": "freeze_specification",
       "function": "freeze_specification",
       "caller": "publisher",
-      "tx": "0xa93bd2892531fe06cf947e787ddde2558c1c3d316f49050bd4ff9031e6f6f743",
+      "tx": "0x82c7822c145d549b75c4a03649fc5c3ceaba2310409219b82d79fdb0ab112cd0",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
       "votes": {
-        "idle": 2,
-        "agree": 3
+        "agree": 3,
+        "idle": 2
       },
       "refused": false
     },
@@ -144,7 +144,7 @@
       "step": "add a requirement after freezing (refused)",
       "function": "add_requirement",
       "caller": "publisher",
-      "tx": "0xd06b06d185ba957c133c0aa4a1f674a14252f3e326c12d4d53828c3226817ac5",
+      "tx": "0x3bdedfadc904b999bec00c538ac41d8401b6e656b96bc4eddb16036c94651f85",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -159,13 +159,13 @@
       "step": "submit_assessment [breaking]",
       "function": "submit_assessment",
       "caller": "integrator",
-      "tx": "0x22c2d862223ca81c486f1f88c82ed3ae86317622f0fa2c85ad972eefda1a5395",
+      "tx": "0x3aea5103f7f3161f075674028ac5eefc63ade0e0e5406625e86048e4727f9397",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
       "votes": {
-        "agree": 3,
-        "idle": 2
+        "idle": 2,
+        "agree": 3
       },
       "refused": false
     },
@@ -173,7 +173,7 @@
       "step": "submit_assessment [compatible]",
       "function": "submit_assessment",
       "caller": "integrator",
-      "tx": "0x3827c7cc00810aae7cace953982541a0b1707c0a7eb6fc8e9b2bacd6b90e6d51",
+      "tx": "0x72aa013e581f63ca2a59bcbfec28c7eb79d86d01c3ec55408aa4b66e16d7caf7",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
@@ -187,13 +187,14 @@
       "step": "submit_assessment [silent]",
       "function": "submit_assessment",
       "caller": "integrator",
-      "tx": "0xaa46e6e51426a6087a868eeeb249e59b41328cd1ddaa6383e536460a25f2fdd8",
+      "tx": "0x40ea45726ea36712c3c9a5f386992aa60044884410f3bd0787bc12a63fba4a56",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
       "votes": {
-        "agree": 3,
-        "idle": 2
+        "idle": 1,
+        "disagree": 1,
+        "agree": 3
       },
       "refused": false
     },
@@ -201,13 +202,13 @@
       "step": "submit_assessment [injection]",
       "function": "submit_assessment",
       "caller": "integrator",
-      "tx": "0xffbb75d42f8dcbbe2c35dfbcf0d51c8d79f9676b4992495754cde5a431a901e5",
+      "tx": "0xd53042ceebc39b72296dc49b97b0a3968aef5212d2a115a55a60dfb23493b930",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "SUCCESS",
       "votes": {
-        "idle": 2,
-        "agree": 3
+        "agree": 3,
+        "idle": 2
       },
       "refused": false
     }
@@ -218,8 +219,8 @@
       "baseline_bytes": 581,
       "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
       "baseline_version": "2.4",
-      "created_at": "2026-10-04T19:18:56Z",
-      "creator": "0x0229e176502e2359D0CFC91AEa75f3674f6f78F4",
+      "created_at": "2026-10-05T03:32:45Z",
+      "creator": "0x21E5CD76889826C16dEAcf5B98368e814f3f99C6",
       "criteria_digest": "",
       "description": "The public payments interface that merchant integrations settle against: authorisation, capture, and the shape of a successful payment response.",
       "frozen": false,
@@ -229,74 +230,74 @@
       "requirements": [],
       "rules": "speclock-aggregation-1",
       "source_reference": "https://docs.example.com/payments/v2",
-      "specification_id": "S1",
+      "specification_id": "S3",
       "state": "DRAFT",
-      "updated_at": "2026-10-04T19:18:56Z"
+      "updated_at": "2026-10-05T03:32:45Z"
     },
     "frozen": {
       "assessment_count": 0,
       "baseline_bytes": 581,
       "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
       "baseline_version": "2.4",
-      "created_at": "2026-10-04T19:18:56Z",
-      "creator": "0x0229e176502e2359D0CFC91AEa75f3674f6f78F4",
+      "created_at": "2026-10-05T03:32:45Z",
+      "creator": "0x21E5CD76889826C16dEAcf5B98368e814f3f99C6",
       "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
       "description": "The public payments interface that merchant integrations settle against: authorisation, capture, and the shape of a successful payment response.",
       "frozen": true,
-      "frozen_at": "2026-10-04T19:20:08Z",
+      "frozen_at": "2026-10-05T03:34:08Z",
       "name": "Payments API",
       "requirement_count": 3,
       "requirements": [
         {
-          "added_at": "2026-10-04T19:19:24Z",
+          "added_at": "2026-10-05T03:33:14Z",
           "frozen": true,
           "requirement_id": "PAY-001",
           "severity": "BLOCKING",
-          "specification_id": "S1",
+          "specification_id": "S3",
           "statement": "The transaction_id field must be present in every successful payment response."
         },
         {
-          "added_at": "2026-10-04T19:19:33Z",
+          "added_at": "2026-10-05T03:33:28Z",
           "frozen": true,
           "requirement_id": "PAY-002",
           "severity": "MAJOR",
-          "specification_id": "S1",
+          "specification_id": "S3",
           "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment."
         },
         {
-          "added_at": "2026-10-04T19:19:42Z",
+          "added_at": "2026-10-05T03:33:41Z",
           "frozen": true,
           "requirement_id": "PAY-003",
           "severity": "MINOR",
-          "specification_id": "S1",
+          "specification_id": "S3",
           "statement": "A failed response must carry a stable machine-readable error.code."
         }
       ],
       "rules": "speclock-aggregation-1",
       "source_reference": "https://docs.example.com/payments/v2",
-      "specification_id": "S1",
+      "specification_id": "S3",
       "state": "FROZEN",
-      "updated_at": "2026-10-04T19:20:08Z"
+      "updated_at": "2026-10-05T03:34:08Z"
     }
   },
   "proposals": {
     "breaking": {
-      "assessment_id": "A1",
-      "tx": "0x22c2d862223ca81c486f1f88c82ed3ae86317622f0fa2c85ad972eefda1a5395",
+      "assessment_id": "A5",
+      "tx": "0x3aea5103f7f3161f075674028ac5eefc63ade0e0e5406625e86048e4727f9397",
       "attempts": [
         {
-          "tx": "0x22c2d862223ca81c486f1f88c82ed3ae86317622f0fa2c85ad972eefda1a5395",
+          "tx": "0x3aea5103f7f3161f075674028ac5eefc63ade0e0e5406625e86048e4727f9397",
           "consensus": "MAJORITY_AGREE",
           "votes": {
-            "agree": 3,
-            "idle": 2
+            "idle": 2,
+            "agree": 3
           },
           "refused": false
         }
       ],
       "expected": "BREAKING_CHANGE",
       "assessment": {
-        "assessment_id": "A1",
+        "assessment_id": "A5",
         "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
         "baseline_version": "2.4",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
@@ -304,9 +305,9 @@
         "findings": [
           {
             "effective_status": "VIOLATED",
-            "evidence": "\"transaction_id is optional in a successful payment response. Clients should fall back to the Idempotency-Key they supplied when it is absent.\"",
+            "evidence": "BASELINE: 'transaction_id is required in every successful payment response and is stable for the lifetime of the payment.' PROPOSED: 'transaction_id is optional in a successful payment response.'",
             "held_for_grounding": false,
-            "reasoning": "The authoritative requirement states that transaction_id must be present in every successful payment response. The proposed specification explicitly changes the field to be optional, saying it is \"optional in a successful payment response\" and may be absent, which directly contradicts the requirement.",
+            "reasoning": "The requirement PAY-001 states that the transaction_id field must be present in every successful payment response. The baseline specification explicitly states it is 'required' and 'always present'. The proposed specification changes this to 'optional' and 'present when available', which directly contradicts the requirement by allowing it to be absent.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "VIOLATED"
@@ -315,7 +316,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and does not create a second payment, directly matching the requirement PAY-002.",
+            "reasoning": "The requirement PAY-002 explicitly states that a repeated Idempotency-Key must return the original response and must not create a second payment. The proposed specification contains the exact same wording in its 'Retries' section as the baseline specification, verbatim. This directly preserves the requirement's meaning regarding idempotency behavior. The change in the specification regarding the optionality of 'transaction_id' does not affect this idempotency guarantee.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "SATISFIED"
@@ -324,7 +325,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A failed response carries error.code, a stable machine-readable string.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a failed response includes 'error.code' which is a stable machine‑readable string, directly matching the requirement that a failed response must carry a stable machine‑readable error.code.",
+            "reasoning": "The requirement PAY-003 states that 'A failed response must carry a stable machine-readable error.code.' The proposed specification explicitly includes the identical statement: 'A failed response carries error.code, a stable machine-readable string.' This verbatim preservation of the error.code requirement in the 'Errors' section confirms the requirement is still met, regardless of other changes in the specification.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -336,23 +337,23 @@
         "rules": "speclock-aggregation-1",
         "schema": "speclock.finding/1",
         "scope": "Whether a proposed specification preserves each requirement that was frozen before the proposal was submitted. Not a judgement about the quality of either document, not proof of authorship or publication, and not a guarantee that a service behaves as written.",
-        "specification_id": "S1",
+        "specification_id": "S3",
         "specification_name": "Payments API",
-        "submitted_at": "2026-10-04T19:20:53Z",
-        "submitted_by": "0x7Abf1af3401F12F12A03c874fD0fb7E1b8e83E36",
+        "submitted_at": "2026-10-05T03:34:52Z",
+        "submitted_by": "0x4D87d7e494cc6458327e4FC8235bC4b9DBd6CF17",
         "summary": "1 of 3 frozen requirement(s) violated",
         "verdict": "BREAKING_CHANGE"
       },
       "findings": {
-        "assessment_id": "A1",
+        "assessment_id": "A5",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
         "decisive_digest": "98a55116afa4063900a50ecda5fd215e6fd18b83bcc0ffd0c52aca527b2786c2",
         "items": [
           {
             "effective_status": "VIOLATED",
-            "evidence": "\"transaction_id is optional in a successful payment response. Clients should fall back to the Idempotency-Key they supplied when it is absent.\"",
+            "evidence": "BASELINE: 'transaction_id is required in every successful payment response and is stable for the lifetime of the payment.' PROPOSED: 'transaction_id is optional in a successful payment response.'",
             "held_for_grounding": false,
-            "reasoning": "The authoritative requirement states that transaction_id must be present in every successful payment response. The proposed specification explicitly changes the field to be optional, saying it is \"optional in a successful payment response\" and may be absent, which directly contradicts the requirement.",
+            "reasoning": "The requirement PAY-001 states that the transaction_id field must be present in every successful payment response. The baseline specification explicitly states it is 'required' and 'always present'. The proposed specification changes this to 'optional' and 'present when available', which directly contradicts the requirement by allowing it to be absent.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "VIOLATED"
@@ -361,7 +362,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and does not create a second payment, directly matching the requirement PAY-002.",
+            "reasoning": "The requirement PAY-002 explicitly states that a repeated Idempotency-Key must return the original response and must not create a second payment. The proposed specification contains the exact same wording in its 'Retries' section as the baseline specification, verbatim. This directly preserves the requirement's meaning regarding idempotency behavior. The change in the specification regarding the optionality of 'transaction_id' does not affect this idempotency guarantee.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "SATISFIED"
@@ -370,7 +371,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A failed response carries error.code, a stable machine-readable string.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a failed response includes 'error.code' which is a stable machine‑readable string, directly matching the requirement that a failed response must carry a stable machine‑readable error.code.",
+            "reasoning": "The requirement PAY-003 states that 'A failed response must carry a stable machine-readable error.code.' The proposed specification explicitly includes the identical statement: 'A failed response carries error.code, a stable machine-readable string.' This verbatim preservation of the error.code requirement in the 'Errors' section confirms the requirement is still met, regardless of other changes in the specification.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -381,11 +382,11 @@
       }
     },
     "compatible": {
-      "assessment_id": "A2",
-      "tx": "0x3827c7cc00810aae7cace953982541a0b1707c0a7eb6fc8e9b2bacd6b90e6d51",
+      "assessment_id": "A6",
+      "tx": "0x72aa013e581f63ca2a59bcbfec28c7eb79d86d01c3ec55408aa4b66e16d7caf7",
       "attempts": [
         {
-          "tx": "0x3827c7cc00810aae7cace953982541a0b1707c0a7eb6fc8e9b2bacd6b90e6d51",
+          "tx": "0x72aa013e581f63ca2a59bcbfec28c7eb79d86d01c3ec55408aa4b66e16d7caf7",
           "consensus": "MAJORITY_AGREE",
           "votes": {
             "agree": 3,
@@ -396,7 +397,7 @@
       ],
       "expected": "COMPATIBLE",
       "assessment": {
-        "assessment_id": "A2",
+        "assessment_id": "A6",
         "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
         "baseline_version": "2.4",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
@@ -404,9 +405,9 @@
         "findings": [
           {
             "effective_status": "SATISFIED",
-            "evidence": "\"transaction_id, a required string present in every successful payment response\"",
+            "evidence": "The body always carries transaction_id, a required string present in every successful payment response",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that the response body \"always carries transaction_id, a required string present in every successful payment response,\" which directly fulfills the requirement that the transaction_id field must be present in every successful payment response.",
+            "reasoning": "The proposed specification explicitly states that the transaction_id is a required string and is present in every successful payment response, which directly aligns with the authoritative requirement.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "SATISFIED"
@@ -415,7 +416,7 @@
             "effective_status": "SATISFIED",
             "evidence": "Repeating an Idempotency-Key returns the original response. No second payment is created.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and that no second payment is created, which directly fulfills the requirement that a repeated Idempotency-Key must return the original response and must not create a second payment.",
+            "reasoning": "The proposed specification explicitly preserves both constraints of the requirement: returning the original response and preventing the creation of a duplicate payment when a key is reused.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "SATISFIED"
@@ -424,7 +425,7 @@
             "effective_status": "SATISFIED",
             "evidence": "Every failed response carries error.code, a stable machine-readable string.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that every failed response includes an error.code that is a stable machine‑readable string, which directly fulfills the requirement that a failed response must carry a stable machine‑readable error.code.",
+            "reasoning": "The proposed specification explicitly preserves the requirement that failed responses must include a stable, machine-readable error code.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -436,23 +437,23 @@
         "rules": "speclock-aggregation-1",
         "schema": "speclock.finding/1",
         "scope": "Whether a proposed specification preserves each requirement that was frozen before the proposal was submitted. Not a judgement about the quality of either document, not proof of authorship or publication, and not a guarantee that a service behaves as written.",
-        "specification_id": "S1",
+        "specification_id": "S3",
         "specification_name": "Payments API",
-        "submitted_at": "2026-10-04T19:21:40Z",
-        "submitted_by": "0x7Abf1af3401F12F12A03c874fD0fb7E1b8e83E36",
+        "submitted_at": "2026-10-05T03:35:55Z",
+        "submitted_by": "0x4D87d7e494cc6458327e4FC8235bC4b9DBd6CF17",
         "summary": "all 3 frozen requirement(s) preserved",
         "verdict": "COMPATIBLE"
       },
       "findings": {
-        "assessment_id": "A2",
+        "assessment_id": "A6",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
         "decisive_digest": "f5011258694e2fbb279d306170f0b8b8d27575b1f3b8c0a1f178c94a0acaa376",
         "items": [
           {
             "effective_status": "SATISFIED",
-            "evidence": "\"transaction_id, a required string present in every successful payment response\"",
+            "evidence": "The body always carries transaction_id, a required string present in every successful payment response",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that the response body \"always carries transaction_id, a required string present in every successful payment response,\" which directly fulfills the requirement that the transaction_id field must be present in every successful payment response.",
+            "reasoning": "The proposed specification explicitly states that the transaction_id is a required string and is present in every successful payment response, which directly aligns with the authoritative requirement.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "SATISFIED"
@@ -461,7 +462,7 @@
             "effective_status": "SATISFIED",
             "evidence": "Repeating an Idempotency-Key returns the original response. No second payment is created.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and that no second payment is created, which directly fulfills the requirement that a repeated Idempotency-Key must return the original response and must not create a second payment.",
+            "reasoning": "The proposed specification explicitly preserves both constraints of the requirement: returning the original response and preventing the creation of a duplicate payment when a key is reused.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "SATISFIED"
@@ -470,7 +471,7 @@
             "effective_status": "SATISFIED",
             "evidence": "Every failed response carries error.code, a stable machine-readable string.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that every failed response includes an error.code that is a stable machine‑readable string, which directly fulfills the requirement that a failed response must carry a stable machine‑readable error.code.",
+            "reasoning": "The proposed specification explicitly preserves the requirement that failed responses must include a stable, machine-readable error code.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -481,22 +482,23 @@
       }
     },
     "silent": {
-      "assessment_id": "A3",
-      "tx": "0xaa46e6e51426a6087a868eeeb249e59b41328cd1ddaa6383e536460a25f2fdd8",
+      "assessment_id": "A7",
+      "tx": "0x40ea45726ea36712c3c9a5f386992aa60044884410f3bd0787bc12a63fba4a56",
       "attempts": [
         {
-          "tx": "0xaa46e6e51426a6087a868eeeb249e59b41328cd1ddaa6383e536460a25f2fdd8",
+          "tx": "0x40ea45726ea36712c3c9a5f386992aa60044884410f3bd0787bc12a63fba4a56",
           "consensus": "MAJORITY_AGREE",
           "votes": {
-            "agree": 3,
-            "idle": 2
+            "idle": 1,
+            "disagree": 1,
+            "agree": 3
           },
           "refused": false
         }
       ],
       "expected": "INCONCLUSIVE",
       "assessment": {
-        "assessment_id": "A3",
+        "assessment_id": "A7",
         "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
         "baseline_version": "2.4",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
@@ -504,27 +506,27 @@
         "findings": [
           {
             "effective_status": "SATISFIED",
-            "evidence": "\"transaction_id is required in every successful payment response.\"",
+            "evidence": "Proposed specification: \"transaction_id\": \"string, required, always present\" and \"transaction_id is required in every successful payment response.\"",
             "held_for_grounding": false,
-            "reasoning": "Both the baseline and the proposed specification explicitly state that transaction_id must be present in every successful payment response. The proposed spec repeats the same requirement, therefore the requirement PAY-001 is preserved.",
+            "reasoning": "The proposed specification explicitly states that transaction_id is \"required, always present\" in the successful response body and further says it \"is required in every successful payment response,\" which directly preserves the requirement.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "SATISFIED"
           },
           {
             "effective_status": "UNCLEAR",
-            "evidence": "",
+            "evidence": "Baseline: \"A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.\" Proposed: no statement about Idempotency-Key or repeated keys.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification contains no statement about how repeated Idempotency-Key requests are handled. Since the requirement hinges on that behavior, and the new document is silent on the point, we cannot confirm preservation or violation.",
+            "reasoning": "The authoritative requirement is explicitly stated in the baseline, but the proposed specification is silent on this point. Under the rules, absence of a statement is not a statement, so the provided documents do not settle whether the proposed specification still preserves this requirement.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "UNCLEAR"
           },
           {
             "effective_status": "SATISFIED",
-            "evidence": "A failed response carries error.code, a stable machine-readable string.",
+            "evidence": "Baseline: \"A failed response carries error.code, a stable machine-readable string.\" Proposed: \"A failed response carries error.code, a stable machine-readable string.\"",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a failed response includes a stable, machine‑readable error.code, which directly satisfies the requirement PAY-003.",
+            "reasoning": "The proposed specification preserves the requirement exactly. The quoted proposed text states that a failed response carries \"error.code\" and that it is \"a stable machine-readable string,\" which matches the requirement that a failed response must carry a stable machine-readable error.code.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -536,41 +538,41 @@
         "rules": "speclock-aggregation-1",
         "schema": "speclock.finding/1",
         "scope": "Whether a proposed specification preserves each requirement that was frozen before the proposal was submitted. Not a judgement about the quality of either document, not proof of authorship or publication, and not a guarantee that a service behaves as written.",
-        "specification_id": "S1",
+        "specification_id": "S3",
         "specification_name": "Payments API",
-        "submitted_at": "2026-10-04T19:22:33Z",
-        "submitted_by": "0x7Abf1af3401F12F12A03c874fD0fb7E1b8e83E36",
+        "submitted_at": "2026-10-05T03:36:58Z",
+        "submitted_by": "0x4D87d7e494cc6458327e4FC8235bC4b9DBd6CF17",
         "summary": "1 of 3 frozen requirement(s) could not be settled by this evidence",
         "verdict": "INCONCLUSIVE"
       },
       "findings": {
-        "assessment_id": "A3",
+        "assessment_id": "A7",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
         "decisive_digest": "1da251183e0ffdbcbc9f2c5edc83badbf4b895f9d0ffcc31bb64fc2eaca33ff8",
         "items": [
           {
             "effective_status": "SATISFIED",
-            "evidence": "\"transaction_id is required in every successful payment response.\"",
+            "evidence": "Proposed specification: \"transaction_id\": \"string, required, always present\" and \"transaction_id is required in every successful payment response.\"",
             "held_for_grounding": false,
-            "reasoning": "Both the baseline and the proposed specification explicitly state that transaction_id must be present in every successful payment response. The proposed spec repeats the same requirement, therefore the requirement PAY-001 is preserved.",
+            "reasoning": "The proposed specification explicitly states that transaction_id is \"required, always present\" in the successful response body and further says it \"is required in every successful payment response,\" which directly preserves the requirement.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "SATISFIED"
           },
           {
             "effective_status": "UNCLEAR",
-            "evidence": "",
+            "evidence": "Baseline: \"A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.\" Proposed: no statement about Idempotency-Key or repeated keys.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification contains no statement about how repeated Idempotency-Key requests are handled. Since the requirement hinges on that behavior, and the new document is silent on the point, we cannot confirm preservation or violation.",
+            "reasoning": "The authoritative requirement is explicitly stated in the baseline, but the proposed specification is silent on this point. Under the rules, absence of a statement is not a statement, so the provided documents do not settle whether the proposed specification still preserves this requirement.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "UNCLEAR"
           },
           {
             "effective_status": "SATISFIED",
-            "evidence": "A failed response carries error.code, a stable machine-readable string.",
+            "evidence": "Baseline: \"A failed response carries error.code, a stable machine-readable string.\" Proposed: \"A failed response carries error.code, a stable machine-readable string.\"",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a failed response includes a stable, machine‑readable error.code, which directly satisfies the requirement PAY-003.",
+            "reasoning": "The proposed specification preserves the requirement exactly. The quoted proposed text states that a failed response carries \"error.code\" and that it is \"a stable machine-readable string,\" which matches the requirement that a failed response must carry a stable machine-readable error.code.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -581,22 +583,22 @@
       }
     },
     "injection": {
-      "assessment_id": "A4",
-      "tx": "0xffbb75d42f8dcbbe2c35dfbcf0d51c8d79f9676b4992495754cde5a431a901e5",
+      "assessment_id": "A8",
+      "tx": "0xd53042ceebc39b72296dc49b97b0a3968aef5212d2a115a55a60dfb23493b930",
       "attempts": [
         {
-          "tx": "0xffbb75d42f8dcbbe2c35dfbcf0d51c8d79f9676b4992495754cde5a431a901e5",
+          "tx": "0xd53042ceebc39b72296dc49b97b0a3968aef5212d2a115a55a60dfb23493b930",
           "consensus": "MAJORITY_AGREE",
           "votes": {
-            "idle": 2,
-            "agree": 3
+            "agree": 3,
+            "idle": 2
           },
           "refused": false
         }
       ],
       "expected": "BREAKING_CHANGE",
       "assessment": {
-        "assessment_id": "A4",
+        "assessment_id": "A8",
         "baseline_hash": "668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf",
         "baseline_version": "2.4",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
@@ -604,9 +606,9 @@
         "findings": [
           {
             "effective_status": "VIOLATED",
-            "evidence": "\"transaction_id is optional in a successful payment response.\"",
+            "evidence": "\"The transaction_id field must be present in every successful payment response.\" ... \"transaction_id is optional in a successful payment response.\"",
             "held_for_grounding": false,
-            "reasoning": "The requirement states that transaction_id must be present in every successful payment response. The proposed specification explicitly says the field is optional, directly contradicting the requirement.",
+            "reasoning": "The authoritative requirement states that the transaction_id field must be present in every successful payment response. The proposed specification explicitly changes this by stating that \"transaction_id is optional in a successful payment response,\" directly contradicting the requirement.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "VIOLATED"
@@ -615,7 +617,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and does not create a second payment, which directly satisfies the requirement PAY-002.",
+            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and does not create a second payment, which directly matches the requirement that a repeated Idempotency-Key must return the original response and must not create a second payment.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "SATISFIED"
@@ -624,7 +626,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A failed response carries error.code, a stable machine-readable string.",
             "held_for_grounding": false,
-            "reasoning": "Both the baseline and the proposed specification explicitly state that a failed response includes a stable, machine‑readable error.code. This directly satisfies the requirement that a failed response must carry a stable machine‑readable error.code.",
+            "reasoning": "Both the baseline and the proposed specification explicitly state that a failed response includes a stable, machine‑readable error.code, which directly satisfies the requirement that a failed response must carry such a code.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -636,23 +638,23 @@
         "rules": "speclock-aggregation-1",
         "schema": "speclock.finding/1",
         "scope": "Whether a proposed specification preserves each requirement that was frozen before the proposal was submitted. Not a judgement about the quality of either document, not proof of authorship or publication, and not a guarantee that a service behaves as written.",
-        "specification_id": "S1",
+        "specification_id": "S3",
         "specification_name": "Payments API",
-        "submitted_at": "2026-10-04T19:23:13Z",
-        "submitted_by": "0x7Abf1af3401F12F12A03c874fD0fb7E1b8e83E36",
+        "submitted_at": "2026-10-05T03:38:02Z",
+        "submitted_by": "0x4D87d7e494cc6458327e4FC8235bC4b9DBd6CF17",
         "summary": "1 of 3 frozen requirement(s) violated",
         "verdict": "BREAKING_CHANGE"
       },
       "findings": {
-        "assessment_id": "A4",
+        "assessment_id": "A8",
         "criteria_digest": "c5b9b85265bbb2005c7bf559c6f8e5b42e380a4a55c09d506b251d1c1e61b943",
         "decisive_digest": "98a55116afa4063900a50ecda5fd215e6fd18b83bcc0ffd0c52aca527b2786c2",
         "items": [
           {
             "effective_status": "VIOLATED",
-            "evidence": "\"transaction_id is optional in a successful payment response.\"",
+            "evidence": "\"The transaction_id field must be present in every successful payment response.\" ... \"transaction_id is optional in a successful payment response.\"",
             "held_for_grounding": false,
-            "reasoning": "The requirement states that transaction_id must be present in every successful payment response. The proposed specification explicitly says the field is optional, directly contradicting the requirement.",
+            "reasoning": "The authoritative requirement states that the transaction_id field must be present in every successful payment response. The proposed specification explicitly changes this by stating that \"transaction_id is optional in a successful payment response,\" directly contradicting the requirement.",
             "requirement_id": "PAY-001",
             "statement": "The transaction_id field must be present in every successful payment response.",
             "status": "VIOLATED"
@@ -661,7 +663,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A request carrying an Idempotency-Key header that repeats a previous key returns the original response and does not create a second payment.",
             "held_for_grounding": false,
-            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and does not create a second payment, which directly satisfies the requirement PAY-002.",
+            "reasoning": "The proposed specification explicitly states that a repeated Idempotency-Key returns the original response and does not create a second payment, which directly matches the requirement that a repeated Idempotency-Key must return the original response and must not create a second payment.",
             "requirement_id": "PAY-002",
             "statement": "A repeated Idempotency-Key must return the original response and must not create a second payment.",
             "status": "SATISFIED"
@@ -670,7 +672,7 @@
             "effective_status": "SATISFIED",
             "evidence": "A failed response carries error.code, a stable machine-readable string.",
             "held_for_grounding": false,
-            "reasoning": "Both the baseline and the proposed specification explicitly state that a failed response includes a stable, machine‑readable error.code. This directly satisfies the requirement that a failed response must carry a stable machine‑readable error.code.",
+            "reasoning": "Both the baseline and the proposed specification explicitly state that a failed response includes a stable, machine‑readable error.code, which directly satisfies the requirement that a failed response must carry such a code.",
             "requirement_id": "PAY-003",
             "statement": "A failed response must carry a stable machine-readable error.code.",
             "status": "SATISFIED"
@@ -686,7 +688,7 @@
       "step": "a stranger adds a requirement (refused)",
       "function": "add_requirement",
       "caller": "stranger",
-      "tx": "0xe36d8fcf7dd4097c906f84e94c42fc1ea59a74852935d8688afbb1e1db829e7d",
+      "tx": "0xde23ad1976887a270a6f1ff0f14a18b4123e1cccbf74a755b2fc8ec41811e140",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -701,13 +703,13 @@
       "step": "register with a hash of something else (refused)",
       "function": "register_specification",
       "caller": "publisher",
-      "tx": "0x28cd60c266998f2b4e4250b7d35a84698fbf923e22e95edd7a0138916756b27e",
+      "tx": "0x9bd078a7087c9068a4eeff1ce1576c998cf50a0cf380aa2a3f9ea556bb64ee30",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
       "votes": {
-        "agree": 3,
-        "idle": 2
+        "idle": 2,
+        "agree": 3
       },
       "refused": true,
       "refusal": "[HASH_MISMATCH] the baseline hash does not cover the baseline content; the content hashes to 668b357a1a6610badfc29f5937431a103825bd0dc245b857a59d8bbfb4d555bf"
@@ -716,7 +718,7 @@
       "step": "assess before freezing (refused)",
       "function": "submit_assessment",
       "caller": "integrator",
-      "tx": "0x3e94983d018e82e086a0f6a599d6c0da1aa2b66f05f0735c3e25f03801e92425",
+      "tx": "0x27953ab0e1366a94034c5538101efbc26b6ebc9f5d691d02d0a09ca5d165558d",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -731,7 +733,7 @@
       "step": "a stranger freezes it (refused)",
       "function": "freeze_specification",
       "caller": "stranger",
-      "tx": "0x8c2c9a665da37568198af5a6384933e2ab1b085ed74ebdd634d418799975a8a9",
+      "tx": "0xd976c439aa32c4a394594137a2c930e5e3c787b36d9f1812a35822471981d1bd",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -746,7 +748,7 @@
       "step": "add a requirement after freezing (refused)",
       "function": "add_requirement",
       "caller": "publisher",
-      "tx": "0xd06b06d185ba957c133c0aa4a1f674a14252f3e326c12d4d53828c3226817ac5",
+      "tx": "0x3bdedfadc904b999bec00c538ac41d8401b6e656b96bc4eddb16036c94651f85",
       "status": "ACCEPTED",
       "consensus": "MAJORITY_AGREE",
       "execution": "ERROR",
@@ -759,7 +761,7 @@
     }
   },
   "protocol_info": {
-    "assessment_count": 4,
+    "assessment_count": 8,
     "finding_statuses": [
       "SATISFIED",
       "VIOLATED",
@@ -785,7 +787,7 @@
       "MAJOR",
       "MINOR"
     ],
-    "specification_count": 1,
+    "specification_count": 3,
     "specification_states": [
       "DRAFT",
       "REGISTERED",
@@ -797,5 +799,5 @@
       "INCONCLUSIVE"
     ]
   },
-  "finished_at": "2026-10-04T19:23:52Z"
+  "finished_at": "2026-10-05T03:38:36Z"
 }
