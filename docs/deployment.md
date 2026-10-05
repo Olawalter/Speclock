@@ -106,8 +106,10 @@ It costs real consensus rounds on a shared network, so expect a few minutes.
 ## The console
 
 ```bash
-cd web && cp .env.example .env.local && npm install && npm run dev
+cd web && npm install && npm run dev
 ```
+
+No setup step: `web/.env` is committed and already names the deployed contract.
 
 ```
 NEXT_PUBLIC_GENLAYER_NETWORK=studio-next
@@ -115,14 +117,23 @@ NEXT_PUBLIC_CHAIN_ID=61997
 NEXT_PUBLIC_SPECLOCK_CONTRACT_ADDRESS=0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
 ```
 
+None of that is a secret -- the address is in the README and in the deployment
+record -- and a console that needs an undocumented step before it shows anything
+is a console nobody runs. To point it somewhere else, put the same names in
+`web/.env.local`, or set them as real environment variables; both take
+precedence and neither is committed. `deploy/check_records.py` fails if the
+committed default stops naming the contract the deployment record describes, so
+it cannot quietly go stale.
+
 There is no server-side secret and no backend, so there is nothing else to set.
 A missing or malformed address is reported as a configuration problem on the
 page rather than producing an empty list that looks like an empty chain.
 
 Deploying the console somewhere: the address is read at **build** time, so a new
-contract means updating the environment variable and rebuilding. A redeploy that
-skips the rebuild serves a console pointed at the previous contract, which looks
-exactly like a working console answering about nothing.
+contract means committing the new default (or setting the variable in the host)
+and rebuilding. A redeploy that skips the rebuild serves a console pointed at
+the previous contract, which looks exactly like a working console answering
+about nothing.
 
 ## The remaining traps
 

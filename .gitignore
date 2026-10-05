@@ -3,6 +3,11 @@
 .env.local
 .env.*.local
 
+# ...except the console's defaults, which are published configuration and
+# not secrets: a contract address that is already in the README. Without it
+# a fresh clone starts pointed at nothing.
+!web/.env
+
 # dependencies and builds
 node_modules/
 .next/

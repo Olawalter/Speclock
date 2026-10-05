@@ -10,8 +10,10 @@ export function ConfigProblem() {
     <section role="alert" className="panel p-5">
       <h1 className="text-lg">This console is not pointed at a contract</h1>
       <p className="lede mt-1">
-        Set these in <span className="mono">web/.env.local</span> and restart. Until then nothing
-        here can read the chain, and it will not pretend otherwise.
+        The repository ships a default in <span className="mono">web/.env</span>, so something
+        has overridden or removed it. Set these in <span className="mono">web/.env.local</span>,
+        or as environment variables where this is deployed, and rebuild. Until then nothing here
+        can read the chain, and it will not pretend otherwise.
       </p>
       <table className="mt-4 w-full text-sm">
         <thead>

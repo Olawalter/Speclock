@@ -61,11 +61,12 @@ def main():
     if live["chain_id"] != deployment["chain_id"]:
         problems.append("the live record and the deployment record disagree about the chain")
 
-    env = (ROOT / "web" / ".env.example").read_text(encoding="utf-8")
-    if address not in env:
-        problems.append(
-            f"web/.env.example does not carry {address}, so the console ships pointed at "
-            f"a different contract")
+    for name in ("web/.env", "web/.env.example"):
+        env = (ROOT / name).read_text(encoding="utf-8")
+        if address not in env:
+            problems.append(
+                f"{name} does not carry {address}, so the console ships pointed at a "
+                f"different contract")
 
     # The report is generated. A hash edited by hand in a published report is
     # exactly the kind of quiet falsehood this product exists to catch.

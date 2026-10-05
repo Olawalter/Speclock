@@ -190,8 +190,12 @@ cd scripts && npm install && node deploy.mjs
 ```
 
 ```bash
-cd web && cp .env.example .env.local && npm install && npm run dev
+cd web && npm install && npm run dev
 ```
+
+The console ships pointed at the deployed contract (`web/.env`), so there is
+no setup step before it shows anything. To point it elsewhere, put the same
+names in `web/.env.local`.
 
 [docs/deployment.md](docs/deployment.md) has the details, including why the
 tooling is JavaScript and which traps this network sets.
