@@ -308,13 +308,30 @@ def _verdict(findings: list) -> str:
 def _decisive(findings: list) -> str:
     """What the validators have to agree about, and nothing else.
 
-    Requirement ids and the status against each one. Reasoning, the wording of
-    quoted evidence and the order they arrive in are all left out: two honest
-    readers never write the same sentence about the same clause, and making
-    prose decisive would fail every round without making anything safer.
+    Requirement ids, the status answered against each one, and the status the
+    grounding rule makes of it. The settled status is here because it is the
+    value the verdict is actually derived from: an answer the evidence does not
+    carry is held at UNCLEAR, so two nodes can answer a requirement with the
+    same word and still be proposing two different verdicts. Comparing the
+    answered status alone cannot see that, and the result that gets stored is
+    the leader's, so what the validator settled on would simply be lost.
+
+    The answered status stays alongside it because the record stores it too,
+    and between them the two pin whether a finding was held, which is every
+    derived field a reader gets.
+
+    Reasoning, the wording of quoted evidence and the order answers arrive in
+    are all still left out: two honest readers never write the same sentence
+    about the same clause, and making prose decisive would fail every round
+    without making anything safer. Two readers who both fail to ground an
+    answer agree here, because the thing that would be stored is the same.
+
+    Settled here rather than by the caller so that there is no way to commit to
+    the unsettled form by accident.
     """
-    return _sha256_hex(_canon([[f["requirement_id"], f["status"]]
-                               for f in sorted(findings, key=lambda x: x["requirement_id"])])
+    settled = _settle(findings)
+    return _sha256_hex(_canon([[f["requirement_id"], f["status"], f["effective_status"]]
+                               for f in sorted(settled, key=lambda x: x["requirement_id"])])
                        .encode("utf-8"))
 
 

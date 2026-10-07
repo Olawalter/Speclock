@@ -72,17 +72,36 @@ output. The leader's actual decision passes through untouched.
 So the validator here re-runs the evaluation itself and compares what a
 consequence depends on:
 
-**Compared** — the set of requirement ids, and the status against each one.
-Nothing else can change the verdict, and the verdict is the protocol state.
+**Compared** — for each requirement id: the status that was answered, and the
+status the grounding rule settles it to.
+
+The settled status is the one the verdict is derived from. A decisive answer the
+evidence does not carry is held at UNCLEAR, so two nodes can answer the same
+requirement with the same word and still be proposing two different verdicts —
+and because the result that gets stored is the leader's, what the validator
+settled on would simply be lost. The answered status is compared alongside it
+because the record publishes that too.
 
 **Not compared** — reasoning, the wording of quoted evidence, ordering. Two
 honest readers never write the same sentence about the same clause. Making prose
 decisive would fail every round while making nothing safer, and would quietly
-push the protocol toward whichever model phrases things most predictably.
+push the protocol toward whichever model phrases things most predictably. Two
+readers who both fail to ground an answer agree, because the thing that would be
+stored is the same.
 
 ```
-PAY-001  leader VIOLATED   validator VIOLATED    agree
-PAY-001  leader VIOLATED   validator SATISFIED   disagree, and nothing is written
+                          answered    grounded   settled
+PAY-001  leader           VIOLATED    yes        VIOLATED     agree
+         validator        VIOLATED    yes        VIOLATED
+
+PAY-001  leader           VIOLATED    yes        VIOLATED     nothing is written
+         validator        VIOLATED    no         UNCLEAR
+
+PAY-001  leader           VIOLATED    no         UNCLEAR      agree
+         validator        VIOLATED    no         UNCLEAR
+
+PAY-001  leader           VIOLATED    -          -            nothing is written
+         validator        SATISFIED   -          -
 ```
 
 ## Where state is written

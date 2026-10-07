@@ -259,6 +259,94 @@ class TestWhatThePanelMustAgreeAbout:
         with expect_error("[NO_MAJORITY]"):
             assess(h, sid, PROPOSED_BREAKING)
 
+    @pytest.mark.parametrize("status,grounded_quote,verdict_if_leader_stands", [
+        ("VIOLATED", QUOTE_OPTIONAL, "BREAKING_CHANGE"),
+        ("SATISFIED", QUOTE_REQUIRED, "COMPATIBLE"),
+    ])
+    def test_equal_statuses_cannot_finalize_when_grounding_would_differ(
+            self, h, status, grounded_quote, verdict_if_leader_stands):
+        """The same raw status is not the same answer.
+
+        Both nodes answer with the identical status, so anything comparing raw
+        statuses sees a match. But the contract does not store the raw status:
+        it stores what the grounding rule makes of it. The leader quotes the
+        documents, so its answer stands; this validator quotes something that is
+        in neither document, so by the same rule its own answer is held at
+        UNCLEAR.
+
+        One of them would store "%s"; the other INCONCLUSIVE. Two different
+        verdicts from one round, and nothing in the comparison that notices.
+        """
+        sid = frozen(h)
+        h.says("PAY-001", status, grounded_quote, role="leader")
+        h.says("PAY-001", status, QUOTE_INVENTED, role="validator")
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+
+        before = h.call("get_protocol_info")["assessment_count"]
+        with expect_error("[NO_MAJORITY]"):
+            assess(h, sid, PROPOSED_BREAKING)
+        # fails closed: not the leader's verdict, not the validator's, nothing
+        assert h.call("get_protocol_info")["assessment_count"] == before
+
+    @pytest.mark.parametrize("status,grounded_quote", [
+        ("VIOLATED", QUOTE_OPTIONAL),
+        ("SATISFIED", QUOTE_REQUIRED),
+    ])
+    def test_and_the_same_holds_when_it_is_the_leader_that_is_ungrounded(
+            self, h, status, grounded_quote):
+        """The other direction, which is the one that actually gets stored.
+
+        Here the leader is the node whose answer the grounding rule holds, so
+        the record would read INCONCLUSIVE while every validator that read the
+        documents properly reached a decisive answer."""
+        sid = frozen(h)
+        h.says("PAY-001", status, QUOTE_INVENTED, role="leader")
+        h.says("PAY-001", status, grounded_quote, role="validator")
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        with expect_error("[NO_MAJORITY]"):
+            assess(h, sid, PROPOSED_BREAKING)
+
+    def test_two_readers_who_both_ground_nothing_still_agree(self, h):
+        """The other half of the rule, and the reason this comparison is about
+        the settled status rather than about the evidence text.
+
+        Neither node can point at the documents, so both of their answers are
+        held at UNCLEAR by the same rule. They disagree about which words they
+        failed to find, which changes nothing about what would be stored, and a
+        round that failed here would cost a consensus round to protect a
+        difference with no consequence."""
+        sid = frozen(h)
+        h.says("PAY-001", "VIOLATED", QUOTE_INVENTED, role="leader")
+        h.says("PAY-001", "VIOLATED", "a different sentence nobody wrote", role="validator")
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        aid = assess(h, sid, PROPOSED_BREAKING)
+        record = h.call("get_assessment", aid)
+        assert record["verdict"] == "INCONCLUSIVE"
+        finding = next(f for f in record["findings"] if f["requirement_id"] == "PAY-001")
+        assert finding["status"] == "VIOLATED"
+        assert finding["effective_status"] == "UNCLEAR"
+        assert finding["held_for_grounding"] is True
+
+    def test_two_readers_who_disagree_about_the_answer_fail_even_when_it_is_held(self, h):
+        """The answered status is compared as well as the settled one.
+
+        Here the grounding rule holds both answers at UNCLEAR, so the verdict
+        would be the same either way -- but the two readers did not read the
+        same thing, and the record publishes what was answered. A round that
+        passed here would store "the reader answered violated" with no
+        validator having agreed that it did.
+        """
+        sid = frozen(h)
+        h.says("PAY-001", "VIOLATED", QUOTE_INVENTED, role="leader")
+        h.says("PAY-001", "SATISFIED", QUOTE_INVENTED, role="validator")
+        h.says("PAY-002", "SATISFIED", QUOTE_IDEMPOTENT)
+        h.says("PAY-003", "SATISFIED", QUOTE_ERROR_CODE)
+        with expect_error("[NO_MAJORITY]"):
+            assess(h, sid, PROPOSED_BREAKING)
+
     def test_a_failed_round_writes_nothing_at_all(self, h):
         """Not a half-assessment, not a record with a blank verdict: nothing."""
         sid = frozen(h)

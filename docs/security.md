@@ -39,7 +39,7 @@ An answer that cannot be grounded is held at `UNCLEAR` in both directions.
 | Property | How |
 | --- | --- |
 | A validator does the work | it re-reads both documents against the frozen requirements and reaches its own findings, rather than inspecting the leader's answer for well-formedness |
-| Only the decision is compared | the status against each requirement id. Prose is excluded, so honest disagreement about wording cannot fail a round and agreement about wording cannot pass one |
+| Only the decision is compared | for each requirement id, the status answered and the status the grounding rule settles it to -- which is the value the verdict is derived from. Prose is excluded, so honest disagreement about wording cannot fail a round and agreement about wording cannot pass one |
 | A failed round writes nothing | the specification is untouched and anybody may ask again |
 | The verdict is not a model output | it is derived in deterministic code from the agreed statuses |
 | The agreed answer is checked again | after consensus, deterministically, and rejected rather than repaired if it does not hold up |

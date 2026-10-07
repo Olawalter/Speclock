@@ -93,17 +93,46 @@ from the other.
 
 ## What the validators compare
 
-One thing: the status against each requirement id.
+Two values per requirement id: **the status that was answered**, and **the
+status the grounding rule settles it to**.
+
+The second is there because it is the one the verdict is derived from. The
+grounding rule holds a decisive answer the evidence does not carry, so these are
+not the same value:
+
+```
+answered SATISFIED, grounded      ->  settles to SATISFIED
+answered SATISFIED, not grounded  ->  settles to UNCLEAR
+```
+
+Two nodes can therefore answer a requirement with the same word and be
+proposing two different verdicts. Consensus has to be able to see that. It
+matters which way round it happens, too: the result that gets stored is the
+leader's, so a validator that settled differently and could not say so would
+simply be overwritten.
 
 Excluded deliberately: reasoning, the wording of quoted evidence, and ordering.
 Two honest readers never write the same sentence about the same clause, so
 making prose decisive would fail every round while making nothing safer, and
 would push the protocol toward whichever model phrases things most predictably.
+Two readers who both fail to ground an answer agree with each other, because
+what would be stored is the same.
 
 ```
-PAY-001   leader VIOLATED    validator VIOLATED     agree
-PAY-001   leader VIOLATED    validator SATISFIED    nothing is written
+                      answered    grounded   settled
+PAY-001  leader       VIOLATED    yes        VIOLATED    agree
+         validator    VIOLATED    yes        VIOLATED
+
+PAY-001  leader       VIOLATED    yes        VIOLATED    nothing is written
+         validator    VIOLATED    no         UNCLEAR
+
+PAY-001  leader       VIOLATED    no         UNCLEAR     agree
+         validator    VIOLATED    no         UNCLEAR
 ```
+
+Grounding is not something a model reports. It is computed in the contract from
+the words the model quoted and the two documents it was given, so what is being
+compared is a value each node derived for itself.
 
 A validator that merely checked the leader's answer parsed and carried a known
 status would have verified nothing. Each one re-reads both documents against the

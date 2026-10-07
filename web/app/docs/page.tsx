@@ -71,10 +71,17 @@ export default function Docs() {
       <section className="grid gap-3">
         <h2>What the panel has to agree about</h2>
         <p>
-          The status against each requirement id, and nothing else. Reasoning and the wording of
-          quoted evidence are deliberately excluded: two honest readers never write the same
-          sentence about the same clause, so making prose decisive would fail every round while
-          making nothing safer.
+          Two values for each requirement id: the status that was answered, and the status the
+          grounding rule settles it to. The second is the one the verdict is derived from &mdash;
+          a decisive answer the documents do not carry is held at Not settled &mdash; so two
+          readers can answer with the same word and still be proposing different verdicts, and
+          consensus has to be able to see that.
+        </p>
+        <p>
+          Reasoning and the wording of quoted evidence are deliberately excluded: two honest
+          readers never write the same sentence about the same clause, so making prose decisive
+          would fail every round while making nothing safer. Two readers who both fail to ground
+          an answer agree with each other, because what would be stored is the same.
         </p>
         <p>
           A validator that merely checked the leader answer parsed and carried a known status
