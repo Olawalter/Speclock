@@ -50,13 +50,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Sharded because each mutant runs the whole suite. The shards cover
-        # every mutant between them; --start/--count exist for exactly this.
+        # Sharded because each mutant runs the whole suite. The last shard runs
+        # to the end rather than counting a fixed number: a shard list with
+        # hardcoded totals silently stops covering the tail the first time a
+        # mutant is added, and nothing goes red to say so.
         include:
           - { shard: "1 of 4", start: 0, count: 10 }
           - { shard: "2 of 4", start: 10, count: 10 }
           - { shard: "3 of 4", start: 20, count: 10 }
-          - { shard: "4 of 4", start: 30, count: 10 }
+          - { shard: "4 of 4", start: 30, count: 0 }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
