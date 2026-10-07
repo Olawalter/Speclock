@@ -10,7 +10,7 @@ time to find; none of them is in any document you would read first.
 | --- | --- |
 | Network | GenLayer Studio Next, chain `61997` |
 | RPC | `https://studio-dev.genlayer.com/api` |
-| Contract | `0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9` |
+| Contract | `0x68da43F1a1136cde798E1D11aDaEb1eBd1c134DC` |
 | Runner | `py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng` |
 | Bytes on chain | `sha256:e18a2b6dbfa4be84…`, identical to `contracts/speclock.py` |
 
@@ -72,12 +72,12 @@ No private key is read from a file, committed, or printed.
 ## Verifying a deployment you did not do
 
 ```bash
-cd scripts && node deploy.mjs --verify 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
+cd scripts && node deploy.mjs --verify 0x68da43F1a1136cde798E1D11aDaEb1eBd1c134DC
 ```
 
 ```bash
-genlayer code --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9 --rpc https://studio-dev.genlayer.com/api
-genlayer schema --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9 --rpc https://studio-dev.genlayer.com/api
+genlayer code --address 0x68da43F1a1136cde798E1D11aDaEb1eBd1c134DC --rpc https://studio-dev.genlayer.com/api
+genlayer schema --address 0x68da43F1a1136cde798E1D11aDaEb1eBd1c134DC --rpc https://studio-dev.genlayer.com/api
 ```
 
 The first proves the deployed bytes hash to what this repository contains. The
@@ -87,7 +87,7 @@ to check that a console is not reading a contract that no longer exists.
 ## Driving it end to end
 
 ```bash
-cd scripts && node live.mjs --address 0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
+cd scripts && node live.mjs --address 0x68da43F1a1136cde798E1D11aDaEb1eBd1c134DC
 ```
 
 Three funded accounts -- a publisher, an integrator and a stranger -- register a
@@ -114,7 +114,7 @@ No setup step: `web/.env` is committed and already names the deployed contract.
 ```
 NEXT_PUBLIC_GENLAYER_NETWORK=studio-next
 NEXT_PUBLIC_CHAIN_ID=61997
-NEXT_PUBLIC_SPECLOCK_CONTRACT_ADDRESS=0x6744F203A6D17B6Ae2D1d3fE944F5a3e02Bfe2E9
+NEXT_PUBLIC_SPECLOCK_CONTRACT_ADDRESS=0x68da43F1a1136cde798E1D11aDaEb1eBd1c134DC
 ```
 
 None of that is a secret -- the address is in the README and in the deployment
